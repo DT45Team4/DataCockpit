@@ -113,7 +113,7 @@ public class UserTilesController {
         List<Map<String, Object>> lists = jdbc1.selectObj(jt, name);
         if (lists != null) {
             try {
-                int shows = (int) lists.get(0).get("shows");
+                int shows = (Integer)lists.get(0).get("shows");
                 model.addAttribute("shows", shows);
                 String time = "'";
                 Date date = null;

@@ -54,7 +54,7 @@ public class Json2Controller {
     @ResponseBody
     @RequestMapping(value = "shuju_1")
     public DatatableResult<Map<String, String>> datatable2(@RequestBody SearchCondition searchCondition) {
-        DatatableResult<Map<String, String>> list = new DatatableResult<>();
+        DatatableResult<Map<String, String>> list = new DatatableResult<Map<String, String>>();
         Map<String, String> map = new HashMap<String, String>();
         map.put("startTime", "1995-3-5 16:20:21");
         map.put("stopTime", "1995-7-5 16:20:21");
@@ -69,7 +69,7 @@ public class Json2Controller {
     @RequestMapping(value = "shuju_2")
     public DatatableResult<Tableinfo> datatable(@IsSearchCondition SearchCondition searchCondition,
             HttpServletRequest req) {
-        DatatableResult<Tableinfo> list = new DatatableResult<>();
+        DatatableResult<Tableinfo> list = new DatatableResult<Tableinfo>();
         HttpSession session = req.getSession();
         Companyinfo cy = (Companyinfo) session.getAttribute("infos");
         Integer id = cy.getId();
@@ -82,7 +82,7 @@ public class Json2Controller {
     @ResponseBody
     @RequestMapping(value = "shujus_2")
     public DatatableResult<Tableinfo> datatable6(@RequestBody SearchCondition searchCondition, HttpServletRequest req) {
-        DatatableResult<Tableinfo> list = new DatatableResult<>();
+        DatatableResult<Tableinfo> list = new DatatableResult<Tableinfo>();
         HttpSession session = req.getSession();
         HttpSession session1 = req.getSession();
         String ids = (String) session1.getAttribute("No1");
@@ -98,7 +98,7 @@ public class Json2Controller {
     @RequestMapping(value = "shuju_3")
     public DatatableResult<Map<String, Object>> datatable3(@IsSearchCondition SearchCondition searchCondition,
             HttpServletRequest req) {
-        DatatableResult<Map<String, Object>> list = new DatatableResult<>();
+        DatatableResult<Map<String, Object>> list = new DatatableResult<Map<String, Object>>();
         String name = req.getParameter("id");
         JdbcUtil jdbc1 = new JdbcUtil();
         ApplicationContext context = jdbc1.getContext();

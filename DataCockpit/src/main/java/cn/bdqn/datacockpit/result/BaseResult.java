@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class BaseResult<T> {
 
-    private List<T> data = new ArrayList<>();
+    private List<T> data = new ArrayList<T>();
 
     public List<T> getData() {
         return data;

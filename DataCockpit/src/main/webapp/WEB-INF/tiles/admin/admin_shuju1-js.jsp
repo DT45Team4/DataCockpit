@@ -18,7 +18,7 @@
 	      ],
 	      "columnDefs": [
 		 					{
-		 	    		   "targets": 3,
+		 	    		   "targets": 3,//通过targets参数设置一个列或者多列，
 		 	    		   "render":function(data, type, row, meta) { return '<a href="./admin_shujus.shtml?id='+row.name+'" style="color:white"><button class="btn btn-primary btn-lg" data-toggle="modal" style="width: 110px;height: 20px;font-size: 13px;line-height: 0px">查看数据</button></a>&emsp;<select><option>已启用</option><option>已禁用</option></select></td>'; } 
 		 					}
 		 					]

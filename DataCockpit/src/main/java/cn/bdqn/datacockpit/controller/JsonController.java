@@ -47,7 +47,7 @@ public class JsonController {
 
     @RequestMapping(value = "dt_list")
     public DatatableResult<Userinfo> datatable(@IsSearchCondition SearchCondition searchCondition) {
-        DatatableResult<Userinfo> list = new DatatableResult<>();
+        DatatableResult<Userinfo> list = new DatatableResult<Userinfo>();
         Userinfo rec = new Userinfo();
         return list;
     }
@@ -55,7 +55,7 @@ public class JsonController {
     @ResponseBody
     @RequestMapping(value = "dt_list2")
     public DatatableResult<Userinfo> datatable2(@RequestBody SearchCondition searchCondition) {
-        DatatableResult<Userinfo> list = new DatatableResult<>();
+        DatatableResult<Userinfo> list = new DatatableResult<Userinfo>();
         List<Userinfo> list2 = us.selectAllUserinfo();
         list.setData(list2);
         return list;
@@ -64,7 +64,7 @@ public class JsonController {
     @ResponseBody
     @RequestMapping(value = "dt_lists3")
     public DatatableResult<Info> datatable23(@RequestBody SearchCondition searchCondition) {
-        DatatableResult<Info> list = new DatatableResult<>();
+        DatatableResult<Info> list = new DatatableResult<Info>();
         List<Info> list2 = ifo.selectAllInfo();
         list.setData(list2);
         return list;
@@ -78,7 +78,7 @@ public class JsonController {
     @ResponseBody
     @RequestMapping(value = "dt_lists4")
     public DatatableResult<Companyinfo> datatable4(@RequestBody SearchCondition searchCondition) {
-        DatatableResult<Companyinfo> list = new DatatableResult<>();
+        DatatableResult<Companyinfo> list = new DatatableResult<Companyinfo>();
         List<Companyinfo> list2 = cfs.selectAllCompanies();
         list.setData(list2);
         return list;

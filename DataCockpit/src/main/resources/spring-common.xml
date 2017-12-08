@@ -78,6 +78,7 @@
 		            /pages/register.jsp=anon
 		            /pages/wangjimima.jsp=anon
 		            /pages/yonghuxieyi.jsp=anon
+		           
 		            *.shtml=authc
 		            *.jsp=authc
 		            

@@ -9,9 +9,12 @@
 
 package cn.bdqn.datacockpit.service;
 
+import java.util.HashMap;
 import java.util.List;
 
+import cn.bdqn.datacockpit.entity.Datarelation;
 import cn.bdqn.datacockpit.entity.Tableinfo;
+import cn.bdqn.datacockpit.entity.Tablerelation2;
 
 /**
  * Description: <br/>
@@ -25,4 +28,22 @@ public interface TableinfoService {
     List<Tableinfo> selectAll(Integer id);
 
     int insert(Tableinfo record);
+    
+    List<Tableinfo> selecttableByName(HashMap<String, Object> map);
+  
+    List<Tablerelation2> selecttablerelation(Integer cid);
+    
+    List< Tableinfo> selectallbyid(Integer cid);
+    
+    String selectnamebyid(Integer id);
+    
+    int updaterestate(HashMap map);
+    
+    List<Datarelation> listreonlyone(HashMap map);
+    
+    int myinsert(HashMap map);
+    
+    List<Datarelation> selectstate(HashMap map);
+    
+    List<Datarelation> selectname(HashMap map);
 }

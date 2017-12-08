@@ -32,12 +32,14 @@ public class AnalysistasksServiceImpl implements AnalysistasksService {
     @Autowired
     AnalysistasksMapper analysis;
     
+  
     @Override
-    public List<Analysistasks> selectAllTasks() {
-        return analysis.selectAllTasks();
-    }
-    
-    @Override
+	public List<Analysistasks> selectAllTasks() {
+		// TODO Auto-generated method stub
+		return analysis.selectAllTasks();
+	}
+
+	@Override
     public int deleteByPrimaryKey(Integer id) {
         int flag=analysis.deleteByPrimaryKey(id);
         return flag;
@@ -77,6 +79,18 @@ public class AnalysistasksServiceImpl implements AnalysistasksService {
         int flag=analysis.updateByPrimaryKey(record);
         return flag;
     }
+
+	@Override
+	public List<Analysistasks> selectdataBycid(Integer cid) {
+		// TODO Auto-generated method stub
+		return analysis.selectdataBycid(cid);
+	}
+
+	@Override
+	public int insertanalysistasksbyid(Analysistasks as) {
+		// TODO Auto-generated method stub
+		return analysis.insertanalysistasksbyid(as);
+	}
 
     
 
