@@ -15,18 +15,24 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.http.HttpRequest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
+import cn.bdqn.datacockpit.entity.Analysistasks;
 import cn.bdqn.datacockpit.entity.Companyinfo;
 import cn.bdqn.datacockpit.entity.Datarelation;
 import cn.bdqn.datacockpit.entity.Info;
 import cn.bdqn.datacockpit.entity.Tableinfo;
+import cn.bdqn.datacockpit.entity.Tablerelation2;
 import cn.bdqn.datacockpit.entity.Userinfo;
+import cn.bdqn.datacockpit.service.AnalysistasksService;
 import cn.bdqn.datacockpit.service.CompanyinfoService;
 import cn.bdqn.datacockpit.service.DatarelationService;
 import cn.bdqn.datacockpit.service.InfoService;
@@ -58,6 +64,9 @@ public class AdminTilesController {
 
     @Autowired
     private RelevanceTableService releTable;
+    
+    @Autowired
+    private AnalysistasksService as;
 
     @RequestMapping("/admin_index")
     public String index(Model model) {
@@ -235,7 +244,7 @@ public class AdminTilesController {
 
     @RequestMapping("/admin_cominfo")
     public String cominfo(Model model) {
-        List<Companyinfo> lists = companyinfo.selectAllCompanies();
+        List<Companyinfo> lists = companyinfo.selectAllCompanies();//查询所有的 企业
         model.addAttribute("menus", "3");
         model.addAttribute("lists", lists);
         return "admin_cominfo.page";
@@ -246,9 +255,45 @@ public class AdminTilesController {
         model.addAttribute("menus", "3");
         String id = req.getParameter("id");
         HttpSession session = req.getSession();
-        session.setAttribute("No1", id);
-        List<Map<String, Object>> lists = releTable.selectAllTables();
-        model.addAttribute("lists", lists);
+        session.setAttribute("No1", id);//No1企业的id
+       // List<Map<String, Object>> lists = releTable.selectAllTables();//所有的数据表
+        //得到该企业的表关联关系
+        int cid=Integer.parseInt(id);
+        List<Tablerelation2> listtable2= ts.selecttablerelation(cid);
+       int i;
+       int j;
+       String tb1;
+       String tb2;
+       if(listtable2.size()>0){
+    	   for (Tablerelation2 table : listtable2) {
+   			i=table.getCol1();
+   			j=table.getCol2();
+   			tb1=table.getTid1();
+   			tb2=table.getTid2();
+   			System.out.println("关联表"+tb1+":"+tb2);
+   			List<String> listss=releTable.selectAll(tb1, i, tb2, j);
+   			
+   			table.setCname1(listss.get(0));//得到列名 ===根据表名去查询该字段的的值
+   			table.setCname2(listss.get(1));
+   			
+   		}
+    	 //遍历关联关系所需要的数据表
+           List< Tableinfo> listf=ts.selectallbyid(cid);
+          /* for (Tableinfo tb : listf) {
+           	String ttb=tb.getName();
+   			tb.setMap(releTable.selectallname(ttb));
+   		}*/
+        String ttb= listf.get(0).getName();
+           //获取维度列
+        HashMap<Integer, Object> maprtb=releTable.selectallname(ttb);
+           //获取现存的分析任务
+        List<Analysistasks> listas=as.selectdataBycid(cid);
+           model.addAttribute("listf", listf);
+           model.addAttribute("listtable2", listtable2);
+           model.addAttribute("maprtb", maprtb);
+           
+           model.addAttribute("listas", listas);
+       }        
         return "admin_shuju1.page";
     }
 
@@ -322,38 +367,49 @@ public class AdminTilesController {
         ChineseToPinYin ctp = new ChineseToPinYin();
         Map<String, Object> map = new HashMap<String, Object>();
         String tbName = null;
-        for (int i = 0; i < attr.length; i++) {
-            if (i == 0) {
-                map.put("shows", attr[0]);//图形显示类型
-            } else if (i == 1) {
-              //  tbName = ctp.getPingYin(attr[1]);
-                tbName = attr[1];
-            } else if (2 * i - 1 <= attr.length) {
-              /*  map.put(ctp.getPingYin(attr[2 * i - 2]), attr[2 * i - 1]);*/
-            	  map.put(attr[2 * i - 2], attr[2 * i - 1]);
-            }
-        }
-
-        JdbcUtil creats = new JdbcUtil();
-        ApplicationContext context = creats.getContext();
-        context = new ClassPathXmlApplicationContext("spring-common.xml");
-        JdbcTemplate jt = (JdbcTemplate) context.getBean("jdbcTemplate");
-        creats.createTable(jt, tbName, map);
-        Date dt = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        String date = sdf.format(dt);
-        Tableinfo record = new Tableinfo();
-        record.setName(attr[1]);
-        record.setUpdatetime(date);
-        record.setShowtype(attr[0]);
+        String ttname=null;     
+        Map<String, String> maps = new HashMap<String, String>();//存储返回值
         HttpSession session = req.getSession();
         String ids = (String) session.getAttribute("No1");
         Integer cid = Integer.parseInt(ids);
-        record.setCid(cid);
-        ts.insert(record);
-
-        Map<String, String> maps = new HashMap<String, String>();
-        maps.put("flag", "1");
+        HashMap<String, Object> mmap=new HashMap<String,Object>();      
+        mmap.put("name", attr[1]);
+        mmap.put("cid", cid);
+        List<Tableinfo>  listif= ts.selecttableByName(mmap);//判断表是否已经存在
+        if(listif.size()==0){
+        	  for (int i = 0; i < attr.length; i++) {
+                  if (i == 0) {
+                      map.put("shows", attr[0]);//图形显示类型
+                  } else if (i == 1) {     
+                	  ttname= ctp.getPingYin(attr[1]);
+                      tbName = ttname+cid;
+                  } else if (2 * i - 1 <= attr.length) {
+                    /*  map.put(ctp.getPingYin(attr[2 * i - 2]), attr[2 * i - 1]);*/
+                  	  map.put(attr[2 * i - 2], attr[2 * i - 1]);
+                  }
+              }        	  
+        	  JdbcUtil creats = new JdbcUtil();
+              ApplicationContext context = creats.getContext();
+              context = new ClassPathXmlApplicationContext("spring-common.xml");
+              JdbcTemplate jt = (JdbcTemplate) context.getBean("jdbcTemplate");
+              creats.createTable(jt, tbName, map);
+              Date dt = new Date();
+              SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+              String date = sdf.format(dt);
+              Tableinfo record = new Tableinfo();
+              record.setName(attr[1]+cid);
+              record.setUpdatetime(date);
+              record.setShowtype(attr[0]);
+             /* HttpSession session = req.getSession();
+              String ids = (String) session.getAttribute("No1");
+              Integer cid = Integer.parseInt(ids);*/
+              record.setCid(cid);
+              ts.insert(record);
+              maps.put("flag", "1");
+        }else{
+        	 maps.put("flag", "0");
+        }
+       
         return maps;
     }
 
@@ -382,10 +438,15 @@ public class AdminTilesController {
 
     @RequestMapping("/insert_guanlian")
     public String insertGL(Datarelation record, HttpServletRequest req) {
-        String id = req.getParameter("id");
+        //String id = req.getParameter("id");
+    	HttpSession session=req.getSession();
+    	String ids = (String) session.getAttribute("No1");
+    	System.out.println(ids);
+        Integer cid = Integer.parseInt(ids);
+        record.setCid(Integer.valueOf(cid));
         int flag = dataService.insert(record);
         if (flag >= 1) {
-            return "redirect:/admin_shuju1.shtml?id=1";
+            return "redirect:/admin_shuju1.shtml?id="+ids;
         }
 
         return "admin_shuju1.page";
@@ -478,5 +539,166 @@ public class AdminTilesController {
     public String admin_uppassword(Model model) {
         model.addAttribute("checks", "geren2");
         return "admin_pass.page";
+    }
+    
+    @ResponseBody
+    @RequestMapping("/admin_ajax")
+    public  Object ajax(@RequestParam(value="rtname1",required=true) int rtname1,Model model)throws Exception{
+    	System.out.println("当前表id"+rtname1);
+    	//Map<String, String> mmap=new HashMap<String, String>();
+    	Integer id=Integer.valueOf(rtname1);
+    	//根据id查询表名
+    	String tbname=ts.selectnamebyid(id);
+    	//根据表名
+    	ChineseToPinYin py=new ChineseToPinYin();
+    	String tbpyname=py.getPingYin(tbname);
+    	HashMap<Integer, Object>  hhmap=releTable.selectallname(tbpyname);
+    	//mmap.put("flag", "1");
+    	//System.out.println(hhmap.keySet());
+    	//Object obj=JSONArray.toJSON(hhmap);
+    	return hhmap;
+    }
+    
+    @ResponseBody
+    @RequestMapping("/admin_ajax2")
+    public  Object ajax2(@RequestParam(value="rtname1",required=true) int rtname1,Model model)throws Exception{
+    	System.out.println("当前表id"+rtname1);
+    	//Map<String, String> mmap=new HashMap<String, String>();
+    	Integer id=Integer.valueOf(rtname1);
+    	//根据id查询表名
+    	String tbname=ts.selectnamebyid(id);
+    	//根据表名
+    	ChineseToPinYin py=new ChineseToPinYin();
+    	String tbpyname=py.getPingYin(tbname);
+    	HashMap<Integer, Object>  hhmap=releTable.selectallname(tbpyname);
+    	//mmap.put("flag", "1");
+    	//System.out.println(hhmap.keySet());
+    	//Object obj=JSONArray.toJSON(hhmap);
+    	return hhmap;
+    }
+    
+    @ResponseBody
+    @RequestMapping("/admin_ajax3")
+    public  Object ajax3(@RequestParam(value="state",required=true) int state,@RequestParam(value="id",required=true) int id,Model model,HttpServletRequest req)throws Exception{
+    	System.out.println("关联id:"+id+"状态"+state);  
+    	HashMap map=new HashMap();
+    	map.put("state", state);
+    	map.put("id", id);
+    	String flag="1";
+    	if(state==1){//判断是否已经有了相同的关联处于启动状态
+	    		HashMap map2=new HashMap();
+	    		map2.put("state", 2);
+	        	map2.put("id", id);
+    		List<Datarelation>  listd=ts.selectstate(map2);//查询到关联的具体的信息
+	    		if(listd.size()>0){
+	    			Datarelation dd=listd.get(0);
+	        		map.put("tid1", dd.getTid1());
+	        		map.put("tid2", dd.getTid2());
+	        		map.put("cid", dd.getCid());	        		
+	        		List<Datarelation> listdd=ts.listreonlyone(map);//查询是否存在当前表的关系处于启用状态
+	        		if(listdd.size()>0){//存在
+	        			flag="2";
+	        		}else{
+	        			//改变状态
+	        			ts.updaterestate(map);
+	        		}
+	    		}    		
+    	}else{
+    		//说明由启用转为禁止
+    		ts.updaterestate(map);
+    	}
+
+    
+    	return flag;
+    }
+    
+    
+/*    @RequestMapping("/admin_ajaxre")
+    public @ResponseBody String regajax(@RequestParam("tab1") String tab1,@RequestParam("tab2") String tab2,HttpServletRequest req)throws Exception{
+    	 int state=1;
+    	System.out.println("关联tab1:"+tab1+":"+tab2+"状态"+state);    
+    	HttpSession session=req.getSession();
+    	String id=(String)session.getAttribute("No1");
+    	int cid=Integer.parseInt(id);
+    	HashMap map=new HashMap();
+    	map.put("state", state);
+    	map.put("cid", cid);
+    	map.put("tab1",tab1);
+    	map.put("tab2",tab2);
+    	List<Datarelation> listll=ts.listreonlyone(map);
+    	String flag;
+    	if(listll.size()>0){
+    		flag="1";
+    	}else{
+    		flag="2";
+    	}
+    	
+    	return flag;
+    }
+    */
+    @RequestMapping("/aaaa222")
+    public @ResponseBody String regajax22(@RequestParam("tab1") int tab1,@RequestParam("tab2") int tab2,@RequestParam("col1") int col1,@RequestParam("col2") String col2,@RequestParam("name") String name,HttpServletRequest req)throws Exception{   	
+    	 int state=1;
+     	System.out.println("关联tab1:"+tab1+":"+tab2+"状态"+state);    
+     	HttpSession session=req.getSession();
+     	String id=(String)session.getAttribute("No1");
+     	int cid=Integer.parseInt(id);
+     	HashMap map=new HashMap();
+     	map.put("state", state);
+     	map.put("cid", cid);
+     	map.put("tid1",tab1);
+     	map.put("tid2",tab2);
+     	map.put("name", name);
+     	List<Datarelation> listll=ts.listreonlyone(map);
+     	String flag;
+     	if(listll.size()>0){   		
+     		flag="1";//已存在
+     	}else{
+     		flag=id;//关系不存在
+     		map.put("col1", col1);
+     		map.put("col2", col2);     		
+     		ts.myinsert(map);
+     	}    	
+     	return flag;
+    	
+    }
+    
+    @RequestMapping("/admin_ajaxname")
+    public @ResponseBody String getname(@RequestParam("name") String name,HttpServletRequest req) throws Exception{
+    		String flag="1";
+    	HttpSession session=req.getSession();
+     	String id=(String)session.getAttribute("No1");
+     	int cid=Integer.parseInt(id);
+     	HashMap map=new HashMap();
+     	map.put("name", name);
+     	map.put("cid", cid);
+     	List<Datarelation>  listnme=ts.selectname(map);
+     	if(listnme.size()>0){
+     		flag="2";//此名字已经存在
+     	}
+    	return flag;
+    }
+    
+  @RequestMapping("admin_shuju6")
+    public String insert(HttpServletRequest req){ 
+	 String dids= req.getParameter("did");
+	 String arithmeticids= req.getParameter("arithmeticid");
+	 String rule=req.getParameter("rule");  
+	 System.out.println("dids:"+dids+"  arithmeticids:"+arithmeticids+"     rule:"+rule);
+	  	Integer did=Integer.parseInt(dids);
+	  	Integer arithmeticid= Integer.parseInt(arithmeticids);
+	  	
+    	System.out.println("=================================");
+    	Analysistasks an=new Analysistasks();
+    	an.setDid(did);
+    	an.setArithmeticid(arithmeticid);
+    	an.setRule(rule);
+    	HttpSession session=req.getSession();
+     	String id=(String)session.getAttribute("No1");
+     	int cid=Integer.parseInt(id);
+    	an.setTaskstatus(0);
+    	an.setCid(cid);
+    	int flag=as.insertanalysistasksbyid(an);
+    	return "redirect:/admin_shuju1.shtml?id="+cid;
     }
 }

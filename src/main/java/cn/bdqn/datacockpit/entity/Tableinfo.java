@@ -1,5 +1,7 @@
 package cn.bdqn.datacockpit.entity;
 
+import java.util.HashMap;
+
 
 public class Tableinfo {
     private Integer id;
@@ -16,7 +18,17 @@ public class Tableinfo {
 
     private String showtype;
 
-    public Integer getId() {
+    private HashMap<Integer, String> map;
+    
+    public HashMap<Integer, String> getMap() {
+		return map;
+	}
+
+	public void setMap(HashMap<Integer, String> map) {
+		this.map = map;
+	}
+
+	public Integer getId() {
         return id;
     }
 

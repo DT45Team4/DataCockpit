@@ -117,4 +117,39 @@
       showtype = #{showtype,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+    <!-- 查询表是否存在 -->
+  <select id="selecttableByName" parameterType="hashmap" resultType="cn.bdqn.datacockpit.entity.Tableinfo">
+  	SELECT * FROM tableinfo WHERE NAME=#{name} AND cid=#{cid}
+  </select>
+	<select id="selecttablerelation" parameterType="Integer" resultType="cn.bdqn.datacockpit.entity.Tablerelation2">
+		SELECT a.id,a.name,a.col1,a.col2,a.state,
+			(SELECT NAME FROM tableinfo b WHERE a.tid1=b.`id`) AS tid1 ,
+			(SELECT NAME FROM tableinfo b WHERE a.tid2=b.`id`) AS tid2
+			 FROM datarelation a WHERE cid=#{cid};
+	</select>
+	
+	<select id="selectallbyid" parameterType="Integer" resultType="cn.bdqn.datacockpit.entity.Tableinfo">		
+		SELECT * FROM tableinfo WHERE cid=#{cid}
+	</select>
+	<select id="selectnamebyid" parameterType="Integer" resultType="String">
+		SELECT name FROM tableinfo WHERE id=#{id}
+	</select>
+	<update id="updaterestate" parameterType="hashmap">
+		UPDATE datarelation SET state=#{state} WHERE id=#{id}
+	</update>
+	<select id="listreonlyone" parameterType="hashmap" resultType="cn.bdqn.datacockpit.entity.Datarelation">		
+		SELECT * FROM datarelation WHERE(tid1=#{tid1} AND tid2=#{tid2} AND state=#{state} AND cid=#{cid}) OR (tid1=#{tid2} AND tid2=#{tid1} AND state=#{state} AND cid=#{cid} )
+	</select>
+	
+	<insert id="myinsert" parameterType="cn.bdqn.datacockpit.entity.Datarelation">
+		INSERT INTO datarelation(NAME,cid,tid1,tid2,col1,col2,state) VALUE(#{name},#{cid},#{tid1},#{tid2},#{col1},#{col2},#{state})
+	</insert>
+	
+	<select id="selectstate" parameterType="hashmap" resultType="cn.bdqn.datacockpit.entity.Datarelation">
+	SELECT * FROM datarelation WHERE id=#{id} AND state=#{state}
+	</select>
+	<select id="selectname" parameterType="hashmap" resultType="cn.bdqn.datacockpit.entity.Datarelation">
+		SELECT * FROM datarelation WHERE NAME=#{name} AND cid=#{cid}
+	</select>
 </mapper>

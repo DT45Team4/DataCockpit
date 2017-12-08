@@ -20,8 +20,19 @@ public class Analysistasks {
     private String feedback;
 
     private Integer arithmeticid;
+    
+    private String name;
+    
 
-    public Integer getId() {
+    public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Integer getId() {
         return id;
     }
 
