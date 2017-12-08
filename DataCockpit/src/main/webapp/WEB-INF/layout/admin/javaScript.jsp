@@ -21,5 +21,5 @@
 <script src="bower_components/ckeditor/ckeditor.js"></script>
 <!-- Bootstrap WYSIHTML5 -->
 <script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
-<script type="text/javascript" language="javascript" src="bower_components/Buttons-1.4.0/js/dataTables.buttons.js"></script>
+<script src="bower_components/Buttons-1.4.0/js/dataTables.buttons.js"></script>
 <!-- page script -->
