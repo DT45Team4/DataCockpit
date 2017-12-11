@@ -77,4 +77,11 @@ public class InfoServiceImpl implements InfoService {
         return infoMapper.selectMaxId();
     }
 
+	@Override
+	public List<String> getColumns(String name) {
+		// TODO Auto-generated method stub
+		return infoMapper.getColumns(name);
+	}
+    
+    
 }

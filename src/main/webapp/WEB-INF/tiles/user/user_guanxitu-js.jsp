@@ -31,16 +31,7 @@
 
     
     //定义画布
-    var paper = new joint.dia.Paper({
-        el: $('#paper'),
-        width: 800,
-        height: 400,
-        gridSize: 1,
-        model: graph,
-        elementView: ElementView,
-        linkView:LinkView
-    });
-    //paper.$el.css('pointer-events', 'none')//去除默认样式，使所有事件不可用
+    var paper = null;
     
 
     //定义形状
@@ -114,14 +105,49 @@
     }
 
     //创建元素
-    var start = state(100,100,"ellipse","#00FFFF", "销售数据表");
+    $("input[class='choose']").click(function(){
+		
+    	paper=new joint.dia.Paper({
+            el: $('#paper'),
+            width: 800,
+            height: 400,
+            gridSize: 1,
+            model: graph,
+            elementView: ElementView,
+            linkView:LinkView
+        });
+        paper.$el.css('pointer-events', 'none')//去除默认样式，使所有事件不可用
+    	
+  		var dname=this.value;
+  		$.ajax({
+  		 	url:"./datarelation.shtml?dname="+dname,
+  			type:"post",
+  			success:function(message){
+  				var datatable= new Array();
+  				var statess= new Array();
+
+  				var start=state(100,100,"ellipse","#00FFFF", dname);
+ 
+  				for(var i=1;i<message.length;i++){
+  					statess[i]=state(300,50+i*50,"rect","#f7a07b", message[i]);
+  					link(start, statess[i], "");
+  				} 
+  			},
+  			error:function(){
+  				alert("error");
+  			} 
+  			
+  		});
+  	});
+    
+    /* var start = state(100,100,"ellipse","#00FFFF", "销售数据表");
     var state1 = state(195,200,"rect","#f7a07b", "认筹数据表");
-    var state2 = state(300,100,"rect","#f7a07b", "到访数据表");
+    var state2 = state(300,100,"rect","#f7a07b", "到访数据表"); */
   
 
     //创建连线
  
-    link(start, state1, "");
-    link(start, state2, "");
+    /* link(start, state1, "");
+    link(start, state2, ""); */
     
     </script>

@@ -4,7 +4,7 @@
   $(function () {
 	var t =	$('#example1').DataTable({
 		 "ajax"		: {
-	    	  "url"		: "<%=request.getContextPath()%>/shuju_1.shtml",
+	    	  "url"		: "<%=request.getContextPath()%>/shuju_4.shtml",
 	    	  "method"	: "POST",
 	    	  "headers" : {"Content-Type": "application/json"},
 	    	  "data"	: function(d){
@@ -14,9 +14,9 @@
 	      "columns": [
 	    	  {"data": "office",
 	    	 "defaultContent": "1"},
-	    	  {"data":"startTime"},
-	    	  {"data":"stopTime"},
-	    	  {"data":"zt"},
+	    	  {"data":"starttime"},
+	    	  {"data":"endtime"},
+	    	  {"data":"taskstatus"},
 	    	  {"data": function(data, type, row) { return '<button onclick="pop()" type="button" class="btn btn-primary btn-lg results" data-toggle="modal" data-target="#myModal2" data-whatever="@jason" style="width: 70px;height: 20px;font-size: 10px;line-height: 0px">查看结果</button>'; } },
 	      ],
 	      
@@ -29,7 +29,7 @@
    		        }).nodes().each(function(cell, i) {
    		              cell.innerHTML = i + 1;
    		  	  
-   		  	   })        	 	
+   		  	   	})        	 	
    		  	   }).draw();	
 	
   })
@@ -45,5 +45,4 @@
         keyboard:false
    	})
    	}
-    
 </script>

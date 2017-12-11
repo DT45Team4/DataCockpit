@@ -241,7 +241,6 @@ public class LoginController {
      */
     @RequestMapping("/updatePassword1")
     public String updatePassword1(Companyinfo company) {
-    	
         int flag = companyinfo.updateByPrimaryKeySelective(company);
         if (flag >= 1) {
             return "redirect:/user_index.shtml";

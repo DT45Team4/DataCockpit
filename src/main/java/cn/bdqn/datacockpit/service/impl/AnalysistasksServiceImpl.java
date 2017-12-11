@@ -32,14 +32,12 @@ public class AnalysistasksServiceImpl implements AnalysistasksService {
     @Autowired
     AnalysistasksMapper analysis;
     
-  
     @Override
-	public List<Analysistasks> selectAllTasks() {
-		// TODO Auto-generated method stub
-		return analysis.selectAllTasks();
-	}
-
-	@Override
+    public List<Analysistasks> selectAllTasks(Integer id) {
+        return analysis.selectAllTasks(id);
+    }
+    
+    @Override
     public int deleteByPrimaryKey(Integer id) {
         int flag=analysis.deleteByPrimaryKey(id);
         return flag;
@@ -48,7 +46,7 @@ public class AnalysistasksServiceImpl implements AnalysistasksService {
     @Override
     public int insert(Analysistasks record) {
         Date dt = new Date();     
-        record.setStarttime(dt);
+        //record.setStarttime(dt);
         int flag=analysis.insert(record);
         return flag;
     }
@@ -67,7 +65,7 @@ public class AnalysistasksServiceImpl implements AnalysistasksService {
     @Override
     public int updateByPrimaryKeySelective(Analysistasks record) {
         Date dt = new Date();     
-        record.setStarttime(dt);
+        //record.setStarttime(dt);
         int flag=analysis.updateByPrimaryKeySelective(record);
         return flag;
     }
@@ -75,7 +73,7 @@ public class AnalysistasksServiceImpl implements AnalysistasksService {
     @Override
     public int updateByPrimaryKey(Analysistasks record) {
         Date dt = new Date();     
-        record.setStarttime(dt);
+        //record.setStarttime(dt);
         int flag=analysis.updateByPrimaryKey(record);
         return flag;
     }

@@ -244,7 +244,7 @@ public class AdminTilesController {
 
     @RequestMapping("/admin_cominfo")
     public String cominfo(Model model) {
-        List<Companyinfo> lists = companyinfo.selectAllCompanies();//查询所有的 企业
+        List<Companyinfo> lists = companyinfo.selectAllCompanies();
         model.addAttribute("menus", "3");
         model.addAttribute("lists", lists);
         return "admin_cominfo.page";
@@ -277,23 +277,29 @@ public class AdminTilesController {
    			table.setCname2(listss.get(1));
    			
    		}
+       }
     	 //遍历关联关系所需要的数据表
            List< Tableinfo> listf=ts.selectallbyid(cid);
           /* for (Tableinfo tb : listf) {
            	String ttb=tb.getName();
    			tb.setMap(releTable.selectallname(ttb));
    		}*/
-        String ttb= listf.get(0).getName();
+           if(listf.size()>0){
+        	   String ttb= listf.get(0).getName();
+        	   HashMap<Integer, Object> maprtb=releTable.selectallname(ttb);
+        	   model.addAttribute("maprtb", maprtb);
+           }
+     
            //获取维度列
-        HashMap<Integer, Object> maprtb=releTable.selectallname(ttb);
+       
            //获取现存的分析任务
         List<Analysistasks> listas=as.selectdataBycid(cid);
            model.addAttribute("listf", listf);
            model.addAttribute("listtable2", listtable2);
-           model.addAttribute("maprtb", maprtb);
+          
            
            model.addAttribute("listas", listas);
-       }        
+              
         return "admin_shuju1.page";
     }
 

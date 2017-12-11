@@ -28,7 +28,7 @@ public class Tableinfo {
 		this.map = map;
 	}
 
-	public Integer getId() {
+    public Integer getId() {
         return id;
     }
 

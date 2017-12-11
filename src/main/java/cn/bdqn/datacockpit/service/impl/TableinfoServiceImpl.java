@@ -47,8 +47,55 @@ public class TableinfoServiceImpl implements TableinfoService {
         return tm.insert(record);
     }
 
+	@Override
+	public List<String> getAllTableinfos() {
+		// TODO Auto-generated method stub
+		return tm.getAllTableinfos();
+	}
 
 	@Override
+	public int getDatatableId(String dname) {
+		// TODO Auto-generated method stub
+		return tm.getDatatableId(dname);
+	}
+
+	@Override
+	public List<String> getDatatableName(int did) {
+		// TODO Auto-generated method stub
+		return tm.getDatatableName(did);
+	}
+
+	@Override
+	public  List<Datarelation> getDataRelation() {
+		// TODO Auto-generated method stub
+		return tm.getDataRelation();
+	}
+
+	@Override
+	public String getTable1(int reid) {
+		// TODO Auto-generated method stub
+		return tm.getTable1(reid);
+	}
+
+	@Override
+	public String getTable2(int reid) {
+		// TODO Auto-generated method stub
+		return tm.getTable2(reid);
+	}
+
+	@Override
+	public Datarelation getOneDataRelation(int reid) {
+		// TODO Auto-generated method stub
+		return tm.getOneDataRelation(reid);
+	}
+
+	@Override
+	public String getField1(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return tm.getField1(map);
+	}
+
+@Override
 	public List<Tableinfo> selecttableByName(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return tm.selecttableByName(map);
@@ -101,9 +148,4 @@ public class TableinfoServiceImpl implements TableinfoService {
 		// TODO Auto-generated method stub
 		return tm.selectname(map);
 	}
-
-	
-	
-    
-	
 }

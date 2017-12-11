@@ -38,4 +38,6 @@ public interface InfoService {
     int updateByPrimaryKey(Info record);
 
     Integer selectMaxId();
+    
+    List<String> getColumns(String name);
 }

@@ -1,4 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
  <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
@@ -13,15 +14,14 @@
         <div class="col-xs-12">
           
           <!-- /.box -->
-          <select>
-            <option value="1">销售到访关联</option>
-            <option value="2">销售认筹关联</option>
-            <option value="3">到访认筹关联</option>
-            <option value="4">到访与媒体渠道关联</option>
+          <select id="relation">
+            <c:forEach items="${relation }" var="rel">
+            	<option value="${rel.id}">${rel.name}</option>
+            </c:forEach>
           </select>
 
           <div class="box">
-          <div style="background:#ECF0F5;font-family: Microsoft Yahei;font-size: 15px">关联的数据表：销售数据表、到访数据表        统一的维度属性：销售数据表.销售日期、到访数据表.到访日期</div>
+          <div style="background:#ECF0F5;font-family: Microsoft Yahei;font-size: 15px" id="showrelation">关联的数据表：${slist[0]}、${slist[1]}       统一的维度属性：${slist[0]}.${slist[2]}、${slist[1]}.${slist[3]}</div>
           
             <div class="box-header" style="width: 180px">
               <h3 class="box-title">数据分析任务列表</h3>
@@ -103,3 +103,20 @@
       </div><!-- /.modal-content -->
    </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<script>
+	$("select[id='relation']").change(function(){	
+		var reid=this.value;
+		$.ajax({
+			url:"./getrelation.shtml?reid="+reid,
+			type:"post",
+			success:function(message){
+				alert(message);
+				$("#showrelation").text("关联的数据表："+message[0]+"、"+message[1]+"       统一的维度属性："+message[0]+"."+message[2]+"、"+message[1]+"."+message[3]);
+			},
+			error:function(){
+				alert("error");
+			}
+			
+		});
+	});
+</script>

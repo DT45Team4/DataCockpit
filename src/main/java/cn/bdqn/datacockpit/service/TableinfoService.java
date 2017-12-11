@@ -29,7 +29,7 @@ public interface TableinfoService {
 
     int insert(Tableinfo record);
     
-    List<Tableinfo> selecttableByName(HashMap<String, Object> map);
+List<Tableinfo> selecttableByName(HashMap<String, Object> map);
   
     List<Tablerelation2> selecttablerelation(Integer cid);
     
@@ -46,4 +46,19 @@ public interface TableinfoService {
     List<Datarelation> selectstate(HashMap map);
     
     List<Datarelation> selectname(HashMap map);
+    List<String> getAllTableinfos();
+    
+    int getDatatableId(String dname);
+    
+    List<String> getDatatableName(int did);
+    
+    List<Datarelation> getDataRelation();
+    
+    Datarelation getOneDataRelation(int reid);
+    //获取统一维度的表
+    String getTable1(int reid);
+    
+    String getTable2(int reid);
+    
+    String getField1(HashMap<String, Object> map);
 }

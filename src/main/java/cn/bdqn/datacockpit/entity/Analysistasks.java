@@ -5,9 +5,9 @@ import java.util.Date;
 public class Analysistasks {
     private Integer id;
 
-    private Date starttime;
+    private String starttime;
     
-    private Date endtime;
+    private String endtime;
 
     private Integer cid;
 
@@ -40,19 +40,19 @@ public class Analysistasks {
         this.id = id;
     }
 
-    public Date getStarttime() {
+    public String getStarttime() {
         return starttime;
     }
 
-    public void setStarttime(Date starttime) {
+    public void setStarttime(String starttime) {
         this.starttime = starttime;
     }
 
-    public Date getEndtime() {
+    public String getEndtime() {
         return endtime;
     }
 
-    public void setEndtime(Date endtime) {
+    public void setEndtime(String endtime) {
         this.endtime = endtime;
     }
 
@@ -72,8 +72,16 @@ public class Analysistasks {
         this.did = did;
     }
 
-    public Integer getTaskstatus() {
-        return taskstatus;
+    public String getTaskstatus() {
+    	if(taskstatus==1){
+    		return "执行中";
+    	}else if(taskstatus==2){
+    		return "执行完成";
+    	}else if(taskstatus==0){
+    		return "已添加";
+    	}else{
+    		return "任务失败";
+    	}
     }
 
     public void setTaskstatus(Integer taskstatus) {

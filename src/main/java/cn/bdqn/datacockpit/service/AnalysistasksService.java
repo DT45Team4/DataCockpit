@@ -21,7 +21,7 @@ import cn.bdqn.datacockpit.entity.Analysistasks;
  * @see 	 
  */
 public interface AnalysistasksService {
-    List<Analysistasks> selectAllTasks();
+    List<Analysistasks> selectAllTasks(Integer id);
     
     int deleteByPrimaryKey(Integer id);
 

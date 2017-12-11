@@ -98,9 +98,7 @@ public class ImportExecl {
     }
 
     public List<List<String>> read(String filePath) {
-
         List<List<String>> dataLst = new ArrayList<List<String>>();
-
         InputStream is = null;
 
         try {
@@ -181,7 +179,8 @@ public class ImportExecl {
      * 
      * @返回值：List
      */
-
+    
+    //读取Excel文件的方法
     public List<List<String>> read(InputStream inputStream, boolean isExcel2003) {
 
         List<List<String>> dataLst = null;

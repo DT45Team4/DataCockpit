@@ -45,6 +45,8 @@
 <!-- 模态框（Modal） -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
    aria-labelledby="myModalLabel" aria-hidden="true" >
+   <!-- AddHandlingFeeToRefund() -->
+   <form id="formAddHandlingFee" name="formAddHandlingFee" action="user_uploads.shtml" method="post" enctype="multipart/form-data">
    <div class="modal-dialog" style="height:60%">
       <div class="modal-content">
          <div class="modal-header">
@@ -57,31 +59,35 @@
          </div>
          
          <div class="modal-body">
-         <center>
-            <input class="ups1" type="text" size="20" name="upfile" id="upfile" style="border:1px dotted #ccc">  
-
-            <input class="ups3"  type="button" value="浏览" onclick="path.click()" style="border:1px solid #ccc;background:#fff">  
-            <input class="ups2" type="file" id="path" style="display:none" onchange="upfile.value=this.value">
+         <center>         
+	           <!--   <input class="ups1" type="text" size="20" name="upfile" id="upfile" style="border:1px dotted #ccc">  
+	           <input class="ups3"  type="button" value="浏览" onclick="path.click()" style="border:1px solid #ccc;background:#fff">  
+	            <input class="ups2" type="file" id="path" style="display:none" onchange="upfile.value=this.value"> -->
+	         	<input type="file" name="upload" style="border:1px solid #ccc;background:#fff" value="浏览"/>
          </center>   
          </div>
-
          <div class="modal-footer">
             <button type="button" class="btn btn-default"
                data-dismiss="modal">关闭
             </button>
-            <button id="ok_10" type="button" class="btn btn-primary">
-               确定
+            <button id="ok_10" type="submit" class="btn btn-primary">
+               		确定
             </button>
          </div>
       </div><!-- /.modal-content -->
    </div><!-- /.modal-dialog -->
+   </form>
 </div>
 <!-- /.modal -->
-<script>
-	$("#ok_10").click(function(){
-		var a1=$(".ups1").val();
+<script>  
+/*  $('#ok_10').click(function() { */
+	/*  $('#formAddHandlingFee').submit(function() {
+		//var a1=$(".ups1").val();
+		var a1=$("upfile").val();
+		alert(a1);
 		$.ajax({
-			url:"./user_uploads.shtml",
+			/* url:"./user_uploads.shtml", */
+			/* url:"./user_uploads_01.shtml",
        		type:"post",
        		traditional:true,
        		data:{
@@ -93,7 +99,7 @@
        		}
        		 
 		})
-		 $("#myModal").hide();       		
+		$("#myModal").hide();       		
     	$(".modal-backdrop").hide(); 
-	})
+	})  */
 </script>

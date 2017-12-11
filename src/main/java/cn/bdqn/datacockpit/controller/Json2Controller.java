@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import cn.bdqn.datacockpit.datatable.DatatableResult;
 import cn.bdqn.datacockpit.datatable.IsSearchCondition;
 import cn.bdqn.datacockpit.datatable.SearchCondition;
+import cn.bdqn.datacockpit.entity.Analysistasks;
 import cn.bdqn.datacockpit.entity.Companyinfo;
 import cn.bdqn.datacockpit.entity.Tableinfo;
+import cn.bdqn.datacockpit.service.AnalysistasksService;
 import cn.bdqn.datacockpit.service.TableinfoService;
 import cn.bdqn.datacockpit.service.XsTableService;
 import cn.bdqn.datacockpit.utils.JdbcUtil;
@@ -50,6 +52,9 @@ public class Json2Controller {
 
     @Autowired
     private TableinfoService ts;
+    
+    @Autowired
+    private AnalysistasksService as;
 
     @ResponseBody
     @RequestMapping(value = "shuju_1")
@@ -65,6 +70,18 @@ public class Json2Controller {
         return list;
     }
 
+    @ResponseBody
+    @RequestMapping(value = "shuju_4")
+    public DatatableResult<Analysistasks> datatable4(@RequestBody SearchCondition searchCondition,HttpServletRequest req) {
+        DatatableResult<Analysistasks> list = new DatatableResult<Analysistasks>();
+        HttpSession session=req.getSession();
+        Companyinfo cy = (Companyinfo) session.getAttribute("infos");
+        Integer id = cy.getId();
+        List<Analysistasks> lists = as.selectAllTasks(id);
+        list.setData(lists);
+        return list;
+    }
+    
     @ResponseBody
     @RequestMapping(value = "shuju_2")
     public DatatableResult<Tableinfo> datatable(@IsSearchCondition SearchCondition searchCondition,

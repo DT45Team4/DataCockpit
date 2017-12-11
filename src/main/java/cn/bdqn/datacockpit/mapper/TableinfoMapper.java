@@ -5,6 +5,7 @@ import java.util.List;
 
 import cn.bdqn.datacockpit.entity.Datarelation;
 import cn.bdqn.datacockpit.entity.Tableinfo;
+import cn.bdqn.datacockpit.entity.Tableinfos;
 import cn.bdqn.datacockpit.entity.Tablerelation2;
 
 public interface TableinfoMapper {
@@ -22,7 +23,7 @@ public interface TableinfoMapper {
 
     int updateByPrimaryKey(Tableinfo record);
     
-    //新建表时查询是否已经存在该表
+ //新建表时查询是否已经存在该表
     List<Tableinfo> selecttableByName(HashMap<String, Object> map);
     //查询现有的关联关系
     List<Tablerelation2> selecttablerelation(Integer cid);
@@ -42,4 +43,19 @@ public interface TableinfoMapper {
     
     //查询关联关系的name是否重复
     List<Datarelation> selectname(HashMap map);
+    List<String> getAllTableinfos();
+    
+    int getDatatableId(String dname);
+    
+    List<String> getDatatableName(int did);
+    
+    List<Datarelation> getDataRelation();
+    
+    String getTable1(int reid);
+    
+    String getTable2(int reid);
+    
+    Datarelation getOneDataRelation(int reid);
+    //获取所有字段
+    String getField1(HashMap<String, Object> map);
 }

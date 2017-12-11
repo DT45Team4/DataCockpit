@@ -96,4 +96,8 @@
       publisher = #{publisher,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <select id="getColumns" parameterType="string" resultType="string">
+  		SELECT COLUMN_NAME FROM information_schema.COLUMNS WHERE table_name = #{name}
+  </select>
 </mapper>

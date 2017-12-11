@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false"%>
+
 <script type="text/javascript">
    
     $("#uploads").click(function(){    
@@ -48,8 +49,10 @@ $("button[data-dismiss=modal]").click(function(){
 
 </script>
 <script>
+
   $(function () {
 	var t =	$('#example1').DataTable({
+		 "processing": true, 
 		 "ajax"		: {
 	    	  "url"		: "<%=request.getContextPath()%>/shuju_3.shtml?id=${name1}",
 	    	  "method"	: "POST",
@@ -58,6 +61,7 @@ $("button[data-dismiss=modal]").click(function(){
 	    		  return JSON.stringify(d);
 	    	  }
 	      },
+	     
 	      "columnDefs": [
 	    	  {"targets": 0,
 	    	   "data": "office",

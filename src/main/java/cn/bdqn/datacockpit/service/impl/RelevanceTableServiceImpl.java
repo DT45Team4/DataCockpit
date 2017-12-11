@@ -47,5 +47,4 @@ public class RelevanceTableServiceImpl implements RelevanceTableService {
 		return rtm.selectallname(name);
 	}
 
-
 }

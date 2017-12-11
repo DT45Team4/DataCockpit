@@ -16,10 +16,10 @@
     id, starttime, endtime, cid, did, taskstatus, rule, feedback, arithmeticid
   </sql>
   
-  <select id="selectAllTasks"  parameterType="Integer" resultMap="BaseResultMap">
+  <select id="selectAllTasks" resultMap="BaseResultMap" parameterType="Integer">
     select 
     <include refid="Base_Column_List" />
-    from analysistasks  
+    from analysistasks  WHERE cid=#{id}
   </select>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >

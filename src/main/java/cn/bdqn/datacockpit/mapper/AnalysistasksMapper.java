@@ -5,7 +5,7 @@ import java.util.List;
 import cn.bdqn.datacockpit.entity.Analysistasks;
 
 public interface AnalysistasksMapper {
-    List<Analysistasks> selectAllTasks();
+    List<Analysistasks> selectAllTasks(Integer id);
     
     int deleteByPrimaryKey(Integer id);
 

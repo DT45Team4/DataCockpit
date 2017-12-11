@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
   
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -29,13 +29,16 @@
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>编号</th>
+                 <th>编号</th>
                   <th>项目名称</th>
                   <th>所在区域</th>
                   <th>日期</th>
                   <th class="people_num">到访人数</th>
                   <th class="people_num">认筹人数</th>
-                  <th>退订人数</th>
+                  <th>退订人数</th> 
+                <%--  <c:forEach items="${columns }" var="col">
+                  		<th>${col}</th>
+                  </c:forEach> --%>
                 </tr>
                 </thead>
                 <tbody>
@@ -187,7 +190,22 @@
        		 
 		})
 		 
-	})
+	});
+	
+	$("#downs").click(function(){
+		alert("111");
+		$.ajax({
+			url:"#",
+			type="post",
+			success:function(message){
+				
+			},
+			error:function(){
+				alert("error");
+			}
+			
+		});
+	});
 </script>
 
 
