@@ -70,8 +70,8 @@
 		 <div class="col-xs-8">
           <div class="checkbox icheck" style="margin-left:10px">
             <label>
-              <input type="checkbox" name="onLine" value="3"> <span style="color:#272822">下次自动登录</span>
-            	<div><span style="color:yellow">${erroMessage} </span></div>
+              <input type="checkbox" name="rememberMe" value="true"> <span style="color:#272822">下次自动登录</span>
+            	<div><span style="color:yellow">${exception} </span></div>
             </label>
           </div>   
         </div>
@@ -115,7 +115,7 @@
 <script src="<%=basePath %>/resource/js/gVerify.js"></script>
 
 
-<script>
+<!-- <script>
 $("#v_container").find("img").click(function(){
 var $img=	$(this);
 	$(this).attr("src","");
@@ -123,7 +123,7 @@ var $img=	$(this);
 		$img.attr("src","getYzm.shtml") 
 		});
 })
-  </script>
+  </script> -->
 
 
 </body>

@@ -31,7 +31,31 @@
 			org.springframework.web.context.ContextLoaderListener
 		</listener-class>
 	</listener>
-
+	<!-- 加载shiro相关配置 -->
+	<!-- <listener>
+    <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
+	</listener> -->
+	<filter>
+		<filter-name>ShiroFilter</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		<init-param>
+			<param-name>targetFilterLifecycle</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<!-- <filter-mapping>
+	    <filter-name>ShiroFilter</filter-name>
+	    <url-pattern>/*</url-pattern>
+	</filter-mapping> -->
+	<filter-mapping>
+	    <filter-name>ShiroFilter</filter-name>
+	    <url-pattern>*.shtml</url-pattern>
+	</filter-mapping>	
+	<filter-mapping>
+	    <filter-name>ShiroFilter</filter-name>
+	    <url-pattern>*.jsp</url-pattern>
+	</filter-mapping>	
+	
 	<!-- spring mvc中实际起到拦截、分发、路程控制的是 DispatcherServlet类-->
 	<servlet>
 		<servlet-name>springServlet</servlet-name>
@@ -55,25 +79,40 @@
 	<!-- <listener>
     <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
 	</listener> -->
-	<filter>
+	<!-- <filter>
 		<filter-name>ShiroFilter</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
 		<init-param>
 			<param-name>targetFilterLifecycle</param-name>
 			<param-value>true</param-value>
-		</init-param>
-	</filter>
+		</init-param> 
+	</filter>-->
 	<!-- <filter>
 	    <filter-name>ShiroFilter</filter-name>
 	    <filter-class>org.apache.shiro.web.servlet.ShiroFilter</filter-class>
 	</filter> -->
 	
-	<filter-mapping>
+	<!-- <filter-mapping>
 	    <filter-name>ShiroFilter</filter-name>
 	    <url-pattern>*.shtml</url-pattern>
 	</filter-mapping>	
 	<filter-mapping>
 	    <filter-name>ShiroFilter</filter-name>
 	    <url-pattern>*.jsp</url-pattern>
-	</filter-mapping>	   
+	</filter-mapping> -->
+	    <build>  
+      <finalName>study_online</finalName>  
+          <plugins>    
+          <!-- define the project compile level -->    
+          <plugin>    
+              <groupId>org.apache.maven.plugins</groupId>    
+              <artifactId>maven-compiler-plugin</artifactId>    
+              <version>2.3.2</version>    
+              <configuration>    
+                  <source>1.7</source>   
+                  <target>1.7</target>    
+              </configuration>    
+          </plugin>    
+      </plugins>    
+    </build>  
 </web-app>

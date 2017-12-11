@@ -25,12 +25,17 @@
                 </tr>
                 </thead>
                 <tbody id="check_1">
-                   <c:forEach items="${infoList }" var="list" varStatus="status">
+                   <c:forEach items="${flag }" var="list" varStatus="status">
                      <tr>
 		                  <th style="text-align: center;">${requestScope.offset+status.index+1}</th>
-		                  <th style="text-align: center;"><a href="./gongGao.shtml?id=${list.id }" style="color:black">${list.title }</a></th>
+		                  <th style="text-align: center;"><a href="./gongGao.shtml?id=${list.info.id }" style="color:black">${list.info.title }</a>
+		                  <c:if test="${list.date==1 }">
+						<img src="resource/images/6.png" />
+						</c:if>
+		                  
+		                  </th>
 		                  <th style="text-align: center;">
-		                  <fmt:formatDate value="${list.publishDate }" pattern="yyyy-MM-dd" />
+		                  <fmt:formatDate value="${list.info.publishDate }" pattern="yyyy-MM-dd" />
 		                  </th>
 		             </tr>
                    </c:forEach>            

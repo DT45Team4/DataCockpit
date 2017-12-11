@@ -75,7 +75,7 @@
 
       <div class="form-group has-feedback">
           <div>
-             <input type="text" class="form-control" id="code_input"  placeholder="请输入验证码" style="width: 140px;float: left">
+             <input type="text" class="form-control" id="randomcode" name="code2" placeholder="请输入验证码" style="width: 140px;float: left">
           </div>
           <div id="v_container" style="width: 150px;height: 40px;float: left;margin-left: 20px"></div>
   
@@ -126,17 +126,17 @@
 <script src="<%=basePath %>/resource/js/icheck.min.js"></script>
 <script src="<%=basePath %>/resource/js/gVerify.js"></script>
 
+<!-- 获取验证码 -->
+<!-- <script>
 
-<script>
-<#-- 获取验证码 -->
     var verifyCode = new GVerify("v_container");
 
     document.getElementById("code_input").onblur = function(){
-      var res = verifyCode.validate(document.getElementById("code_input").value);
+      var res = document.getElementById("code_input").value;
       if(!res){
         alert("验证码错误");
       }
     }
-  </script>
+  </script> -->
 </body>
 </html>

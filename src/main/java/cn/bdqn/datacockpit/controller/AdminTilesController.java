@@ -12,6 +12,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -82,6 +83,7 @@ public class AdminTilesController {
      * @return
      */
     @RequestMapping("/admin_tongzhi1")
+    @RequiresPermissions("admin")
     public String tongzhi1(Model model) {
         model.addAttribute("menus", "1");
         return "admin_tongzhi1.page";
@@ -96,11 +98,13 @@ public class AdminTilesController {
      * @return
      */
     @RequestMapping("/admin_tongzhi2")
+    @RequiresPermissions("admin")
     public String tongzhi2(Model model) {
         return "admin_tongzhi2.page";
     }
 
     @RequestMapping("/admin_tongzhi3")
+    @RequiresPermissions("admin")
     public String tongzhi3(Model model, HttpServletRequest req) {
         // 获取id
         Integer id = Integer.parseInt(req.getParameter("id"));
@@ -110,6 +114,7 @@ public class AdminTilesController {
     }
 
     @RequestMapping("/tongzhi_update")
+    @RequiresPermissions("admin")
     public String tongzhi_update(Info info) {
         // 获取实体类信息
         is.updateByPrimaryKeySelective(info);
@@ -125,6 +130,7 @@ public class AdminTilesController {
      * @return
      */
     @RequestMapping("/tongzhi_insert")
+    @RequiresPermissions("admin")
     public String tongzhi_insert(Info info) {
         // 获取实体类信息，将新增数据存入数据库
         is.insertSelective(info);
@@ -141,6 +147,7 @@ public class AdminTilesController {
     }
 
     @RequestMapping("/tongzhi_delete")
+    @RequiresPermissions("admin")
     public String tongzhi_delete(HttpServletRequest req) {
         // 获取id
         Integer id = Integer.parseInt(req.getParameter("id"));
@@ -149,6 +156,7 @@ public class AdminTilesController {
     }
 
     @RequestMapping("/admin_delete")
+    @RequiresPermissions("admin")
     public String admin_delete(HttpServletRequest req) {
         // 获取id
         Integer id = Integer.parseInt(req.getParameter("id"));
@@ -157,6 +165,7 @@ public class AdminTilesController {
     }
 
     @RequestMapping("/adminus_delete")
+    @RequiresPermissions("admin")
     public String adminus_delete(HttpServletRequest req) {
         // 获取id
         Integer id = Integer.parseInt(req.getParameter("id"));
@@ -165,6 +174,7 @@ public class AdminTilesController {
     }
 
     @RequestMapping("/aduser_update")
+    @RequiresPermissions("admin")
     public String aduser_update(Model model, HttpServletRequest req) {
         // 获取实体类信息
         Integer id = Integer.parseInt(req.getParameter("id"));
@@ -179,6 +189,7 @@ public class AdminTilesController {
      * @return
      */
     @RequestMapping("/adminuss_updatee")
+    @RequiresPermissions("admin")
     public String adminuss_updatee(HttpServletRequest req) {
         // 获取实体类信息
         Integer id = Integer.parseInt(req.getParameter("id"));
@@ -194,6 +205,7 @@ public class AdminTilesController {
      * @return
      */
     @RequestMapping("/adminuss_updatee0")
+    @RequiresPermissions("admin")
     public String adminuss_updatee0(HttpServletRequest req) {
         // 获取实体类信息
         Integer id = Integer.parseInt(req.getParameter("id"));
@@ -209,6 +221,7 @@ public class AdminTilesController {
      * @return
      */
     @RequestMapping("/aduser_update1")
+    @RequiresPermissions("admin")
     public String aduser_update1(HttpServletRequest req) {
         // 获取实体类信息
         Integer id = Integer.parseInt(req.getParameter("id"));
@@ -224,6 +237,7 @@ public class AdminTilesController {
      * @return
      */
     @RequestMapping("/aduser_update0")
+    @RequiresPermissions("admin")
     public String aduser_update0(HttpServletRequest req) {
         // 获取实体类信息
         Integer id = Integer.parseInt(req.getParameter("id"));
@@ -234,6 +248,7 @@ public class AdminTilesController {
     }
 
     @RequestMapping("/aduser_update2")
+    @RequiresPermissions("admin")
     public String aduser_insert(Companyinfo comps) {
         // 获取实体类信息
         int flag = companyinfo.updateByPrimaryKey(comps);
@@ -243,6 +258,7 @@ public class AdminTilesController {
     }
 
     @RequestMapping("/admin_cominfo")
+    @RequiresPermissions("admin")
     public String cominfo(Model model) {
         List<Companyinfo> lists = companyinfo.selectAllCompanies();
         model.addAttribute("menus", "3");
@@ -251,6 +267,7 @@ public class AdminTilesController {
     }
 
     @RequestMapping("/admin_shuju1")
+    @RequiresPermissions("admin")
     public String shuju1(Model model, HttpServletRequest req) throws Exception {
         model.addAttribute("menus", "3");
         String id = req.getParameter("id");
@@ -296,7 +313,6 @@ public class AdminTilesController {
         List<Analysistasks> listas=as.selectdataBycid(cid);
            model.addAttribute("listf", listf);
            model.addAttribute("listtable2", listtable2);
-          
            
            model.addAttribute("listas", listas);
               
@@ -304,29 +320,37 @@ public class AdminTilesController {
     }
 
     @RequestMapping("/admin_shuju2")
+	@RequiresPermissions("admin")
     public String shuju2(Model model, HttpServletRequest req) {
         return "admin_shuju2.page";
     }
 
     @RequestMapping("/admin_shuju3")
+    @RequiresPermissions("admin")
     public String shuju3(Model model) {
         return "admin_shuju3.page";
     }
 
     @RequestMapping("/admin_shuju4")
+    @RequiresPermissions("admin")
     public String shuju4(Model model) {
         model.addAttribute("menus", "2");
         return "admin_shuju4.page";
     }
 
     @RequestMapping("insertAdminReg")
+    @RequiresPermissions("admin")
     public String insertAdminReg(Userinfo record) {
+    	//添加管理员账号
         int flag = us.insertSelective(record);
+        System.out.println(record.getId()+"\t"+record.getPhone());
+        int flag1=us.insertAdminRole(record);
         // 转发
         return "admin_shuju4.page";
     }
 
     @RequestMapping("/selectAllCompanyinfo")
+    @RequiresPermissions("admin")
     public String selectAllCompanyinfo(Model model, HttpServletRequest req) {
         List<Companyinfo> lists = companyinfo.selectAllCompanies();
         model.addAttribute("lists", lists);
@@ -344,6 +368,7 @@ public class AdminTilesController {
     }
 
     @RequestMapping("/admin_userDsh")
+    @RequiresPermissions("admin")
     public String dshCompanyinfo(Model model) {
 
         List<Companyinfo> lists = companyinfo.selectAllCompanies();
@@ -354,6 +379,7 @@ public class AdminTilesController {
     }
 
     @RequestMapping("/admin_userMan")
+    @RequiresPermissions("admin")
     public String userMan(Model model) {
 
         List<Companyinfo> lists = companyinfo.selectAllCompanies();
@@ -367,6 +393,7 @@ public class AdminTilesController {
     // 新建数据表
     @ResponseBody
     @RequestMapping("/admin_create")
+    @RequiresPermissions("admin")
     public Map<String, String> creats(@RequestParam("values") String id, HttpServletRequest req) {
        System.out.println(id);
     	String[] attr = id.split(",");
@@ -420,6 +447,7 @@ public class AdminTilesController {
     }
 
     @RequestMapping("/admin_selects")
+    @RequiresPermissions("admin")
     public String selects(Model model) {
         List<Companyinfo> lists = companyinfo.selectAllCompanies();
         System.out.println(lists);
@@ -436,6 +464,7 @@ public class AdminTilesController {
      * @return
      */
     @RequestMapping("/admin_gongGao")
+    @RequiresPermissions("admin")
     public String gongGao1(Integer id, Model model) {
         Info infos = is.selectByPrimaryKey(id);
         model.addAttribute("ggg", infos);
@@ -443,6 +472,7 @@ public class AdminTilesController {
     }
 
     @RequestMapping("/insert_guanlian")
+    @RequiresPermissions("admin")
     public String insertGL(Datarelation record, HttpServletRequest req) {
         //String id = req.getParameter("id");
     	HttpSession session=req.getSession();
@@ -459,6 +489,7 @@ public class AdminTilesController {
     }
 
     @RequestMapping("/admin_adds")
+    @RequiresPermissions("admin")
     public String adds(Model model) {
 
         List<Companyinfo> lists = companyinfo.selectAllCompanies();
@@ -471,6 +502,7 @@ public class AdminTilesController {
     }
 
     @RequestMapping("/admin_shujus")
+    @RequiresPermissions("admin")
     public String shuju3(Model model, HttpServletRequest req) {
         model.addAttribute("menus", "3");
         String names = req.getParameter("id");
@@ -542,6 +574,7 @@ public class AdminTilesController {
     }
 
     @RequestMapping("/admin_uppassword")
+    @RequiresPermissions("admin")
     public String admin_uppassword(Model model) {
         model.addAttribute("checks", "geren2");
         return "admin_pass.page";

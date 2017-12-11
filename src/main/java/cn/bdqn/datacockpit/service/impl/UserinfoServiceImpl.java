@@ -9,6 +9,7 @@
 
 package cn.bdqn.datacockpit.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -55,7 +56,11 @@ public class UserinfoServiceImpl implements UserinfoService {
         int flag = userinfoMapper.insertSelective(record);
         return flag;
     }
-
+    @Override
+	public int insertAdminRole(Userinfo record) {
+		// TODO Auto-generated method stub
+		return userinfoMapper.insertAdminRole(record);
+	}
     @Override
     public Userinfo selectByPrimaryKey(Integer id) {
         return userinfoMapper.selectByPrimaryKey(id);
@@ -72,20 +77,27 @@ public class UserinfoServiceImpl implements UserinfoService {
         int flag = userinfoMapper.updateByPrimaryKey(record);
         return flag;
     }
-
+    //根据用户名获取用户信息
     @Override
-    public Userinfo getByPhone(String phone) {
-        return userinfoMapper.getByPhone(phone);
+    public Userinfo selectByPhone(String phone) {
+        return userinfoMapper.selectByPhone(phone);
     }
+    //根据用户名获取用户角色
+	@Override
+	public List<Integer> selectRid(String phone) {
+		// TODO Auto-generated method stub
+		return userinfoMapper.selectRid(phone);
+	}
+	//根据角色id获取角色权限
+	@Override
+	public List<String> selectPermissions(Integer rid) {
+		// TODO Auto-generated method stub
+		return userinfoMapper.selectPermissions(rid);
+	}
 
-    @Override
-    public Set<String> getRoles(String phone) {
-        return userinfoMapper.getRoles(phone);
-    }
-
-    @Override
-    public Set<String> getPermissions(String phone) {
-        return userinfoMapper.getPermissions(phone);
-    }
-
+	@Override
+	public int updateLoginstateByPhone(HashMap map) {
+		// TODO Auto-generated method stub
+		return userinfoMapper.updateLoginstateByPhone(map);
+	}
 }

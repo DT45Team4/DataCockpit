@@ -35,6 +35,16 @@ public class Userinfo {
     private String email;
 
     private Integer state;
+    
+    private int loginstate;
+
+    public int getLoginstate() {
+		return loginstate;
+	}
+
+	public void setLoginstate(int loginstate) {
+		this.loginstate = loginstate;
+	}
 
     private List<String> roles;
 

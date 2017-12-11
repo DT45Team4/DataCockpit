@@ -9,6 +9,7 @@
 
 package cn.bdqn.datacockpit.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -31,6 +32,8 @@ public interface UserinfoService {
     int insert(Userinfo record);
 
     int insertSelective(Userinfo record);
+    //给上述账号绑定管理员角色
+    int insertAdminRole(Userinfo record);
 
     Userinfo selectByPrimaryKey(Integer id);
 
@@ -43,19 +46,20 @@ public interface UserinfoService {
      * @param userName
      * @return
      */
-    public Userinfo getByPhone(String phone);
-    
+    public Userinfo selectByPhone(String phone);
+    //修改用户登录状态
+    public int updateLoginstateByPhone(HashMap map);
     /**
-     * shiro通过电话号查询角色信息
+     * shiro通过电话号查询对应角色编号
      * @param userName
      * @return
      */
-    public Set<String> getRoles(String phone);
+    public List<Integer> selectRid(String phone);
     
     /**
      * shiro通过电话号查询权限信息
      * @param userName
      * @return
      */
-    public Set<String> getPermissions(String phone);
+    public List<String> selectPermissions(Integer rid);
 }

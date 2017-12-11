@@ -1,5 +1,6 @@
 package cn.bdqn.datacockpit.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -12,9 +13,10 @@ public interface UserinfoMapper {
     int deleteByPrimaryKey(Integer id);
 
     int insert(Userinfo record);
-
+    //添加管理员账号
     int insertSelective(Userinfo record);
-
+    int insertAdminRole(Userinfo record);
+    
     Userinfo selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(Userinfo record);
@@ -26,19 +28,20 @@ public interface UserinfoMapper {
      * @param userName
      * @return
      */
-    public Userinfo getByPhone(String phone);
-    
+    public Userinfo selectByPhone(String phone);
+    //修改用户登录状态
+    public int updateLoginstateByPhone(HashMap map);
     /**
      * shiro通过电话号查询角色信息
      * @param userName
      * @return
      */
-    public Set<String> getRoles(String phone);
+    public List<Integer> selectRid(String phone);
     
     /**
      * shiro通过电话号查询权限信息
      * @param userName
      * @return
      */
-    public Set<String> getPermissions(String phone);
+    public List<String> selectPermissions(Integer rid);
 }

@@ -10,19 +10,20 @@
     <result column="email" property="email" jdbcType="VARCHAR" />
     <result column="state" property="state" jdbcType="INTEGER" />
   </resultMap>
-  <!-- shiro专用方法 -->
-  <select id="getByPhone" parameterType="String" resultMap="BaseResultMap">
-		SELECT * FROM userinfo WHERE phone=#{phone}
+  <select id="selectByPhone" parameterType="string" resultType="cn.bdqn.datacockpit.entity.Userinfo">
+		SELECT * FROM userinfo WHERE phone=#{Param}
 	</select>
 	
-	<select id="getRoles" parameterType="String" resultMap="BaseResultMap">
-		SELECT r.role_name FROM userinfo u INNER JOIN user_role ur ON u.id=ur.uid INNER JOIN role r ON ur.rid=r.id WHERE u.phone=#{phone}
+	<select id="selectRid" parameterType="string" resultType="java.lang.Integer">
+		SELECT rid FROM user_role ur INNER JOIN userinfo ui ON ur.uid=ui.id WHERE ui.phone=#{Param}; 
 	</select>
 	
-	<select id="getPermissions" parameterType="String" resultMap="BaseResultMap">
-		SELECT p.per_name FROM userinfo u INNER JOIN user_role ur ON u.id=ur.uid INNER JOIN role r ON ur.rid=r.id INNER JOIN role_permission rp ON rp.rid=r.id INNER JOIN permission p ON p.id=rp.pid WHERE u.phone=#{phone}
+	<select id="selectPermissions" parameterType="int" resultType="java.lang.String">
+		SELECT percode FROM permission pe INNER JOIN role_permission rp ON pe.id=rp.pid WHERE rp.rid=#{rid};
 	</select>
-	
+	<update id="updateLoginstateByPhone" parameterType="java.util.HashMap">
+		UPDATE userinfo SET loginstate=#{loginstate} WHERE phone=#{phone};
+	</update>
   <!-- 正常增删改查 -->
   <sql id="Base_Column_List" >
     id, name, job, password, phone, email, state
@@ -100,6 +101,9 @@
         #{state,jdbcType=INTEGER},
       </if>
     </trim>
+  </insert>
+  <insert id="insertAdminRole" parameterType="cn.bdqn.datacockpit.entity.Userinfo">
+  		INSERT INTO user_role(rid,uid) VALUES(2,(SELECT id FROM userinfo WHERE phone=#{phone})); 
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="cn.bdqn.datacockpit.entity.Userinfo" >
     update userinfo

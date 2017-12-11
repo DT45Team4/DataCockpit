@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -79,6 +79,7 @@ public class UserTilesController {
      * @return
      */
     @RequestMapping("/user_index")
+    @RequiresPermissions("user")
     public String index(Model model) {
         return "user_index.pages";
     }
@@ -92,11 +93,24 @@ public class UserTilesController {
      * @return
      */
     @RequestMapping("/user_second")
+    @RequiresPermissions("user")
     public String userSecond(HttpServletRequest req) {
+    	 List<Map<String, Object>> lists = new ArrayList<Map<String, Object>>();
         List<Info> infoList = infoService.selectAllInfo();
+        Date time = new Date();
+        Date ti1 = new Date(time.getTime() - 7 * 24 * 60 * 60 * 1000);
         if (infoList != null) {
             for (Info info : infoList) {
                 Date date = info.getPublishDate();
+                Map<String, Object> map = new HashMap<String, Object>();
+                if (ti1.before(date)) {
+                    map.put("date", 1);
+                } else {
+                    map.put("date", 0);
+                }
+
+                map.put("info", info);
+                lists.add(map);
                 System.out.println(date);
             }
         }
@@ -106,6 +120,7 @@ public class UserTilesController {
     }
 
     @RequestMapping("/user_shuju1")
+    @RequiresPermissions("user")
     public String shuju1(Model model,HttpServletRequest req) {
         model.addAttribute("checks", "shuju1");
         List<Datarelation> relation=tableinfoService.getDataRelation();
@@ -149,12 +164,14 @@ public class UserTilesController {
     }
 
     @RequestMapping("/user_shuju2")
+    @RequiresPermissions("user")
     public String shuju2(Model model) {
         model.addAttribute("checks", "shuju2");
         return "user_shuju2.pages";
     }
 
     @RequestMapping("/user_shuju3")
+    @RequiresPermissions("user")
     public String shuju3(Model model, HttpServletRequest req) {
         model.addAttribute("checks", "shuju3");
         String names = req.getParameter("id");
@@ -235,6 +252,7 @@ public class UserTilesController {
     }
 
     @RequestMapping("/user_guanxitu")
+    @RequiresPermissions("user")
     public String userGuanxitu(Model model) {
     	List<String> listss=tableinfoService.getAllTableinfos();
         model.addAttribute("checks", "shuju4");
@@ -243,6 +261,7 @@ public class UserTilesController {
     }
 
     @RequestMapping("/user_uploads_01")
+	@RequiresPermissions("user")
     public String upload(Model model, HttpServletRequest req) throws Exception {
         String urls = req.getParameter("urls");
         
@@ -299,6 +318,7 @@ public class UserTilesController {
 
     @ResponseBody
     @RequestMapping("/user_uploadss")
+    @RequiresPermissions("user")
     public Map<String, String> uploads(Model model, HttpServletRequest req) throws Exception {
         String urls = req.getParameter("urls");
         String tb1 = urls.substring(12);
