@@ -170,7 +170,7 @@ public class AdminTilesController {
         // 获取id
         Integer id = Integer.parseInt(req.getParameter("id"));
         companyinfo.deleteByPrimaryKey(id);
-        return "admin_userDsh.page";
+        return "selectAllCompanyinfo.page";
     }
 
     @RequestMapping("/aduser_update")
