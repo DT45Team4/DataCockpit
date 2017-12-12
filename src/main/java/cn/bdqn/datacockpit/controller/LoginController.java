@@ -160,6 +160,7 @@ public class LoginController {
             if (rid==1) {//如果该用户是企业用户
             	Companyinfo compi = companyinfo.selectByPhone(phone);//得到公司信息列表
                 session.setAttribute("infos", compi);
+                session.setAttribute("No2", compi.getId());
                 session.setAttribute("flag", lists);
                 return "redirect:/user_index.shtml";
             }

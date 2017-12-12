@@ -110,7 +110,7 @@
 			url:"./getrelation.shtml?reid="+reid,
 			type:"post",
 			success:function(message){
-				alert(message);
+				//alert(message);
 				$("#showrelation").text("关联的数据表："+message[0]+"、"+message[1]+"       统一的维度属性："+message[0]+"."+message[2]+"、"+message[1]+"."+message[3]);
 			},
 			error:function(){

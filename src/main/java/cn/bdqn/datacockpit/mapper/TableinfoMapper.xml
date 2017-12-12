@@ -118,26 +118,26 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   
-  <select id="getAllTableinfos" resultType="string">
-  		SELECT NAME FROM tableinfos
+  <select id="getAllTableinfos" resultType="string" parameterType="int">
+  		SELECT NAME FROM tableinfo WHERE cid=#{cid}
   </select>
   
   <select id="getDatatableId" parameterType="string" resultType="int">
-  	SELECT id FROM tableinfos WHERE NAME=#{dname}
+  	SELECT id FROM tableinfo WHERE NAME=#{dname}
   </select>
   
   <select id="getDatatableName" parameterType="int" resultType="string">
-  	 SELECT NAME FROM tableinfos WHERE id IN (SELECT tid1 FROM datarelation WHERE tid1=(SELECT id FROM tableinfos WHERE id=#{did}) OR tid2=(SELECT id FROM tableinfos WHERE id=#{did})) UNION SELECT NAME FROM tableinfos WHERE id IN (SELECT tid2 FROM datarelation WHERE tid1=(SELECT id FROM tableinfos WHERE id=#{did}) OR tid2=(SELECT id FROM tableinfos WHERE id=#{did}));
+  	 SELECT NAME FROM tableinfo WHERE id IN (SELECT tid1 FROM datarelation WHERE tid1=(SELECT id FROM tableinfo WHERE id=#{did}) OR tid2=(SELECT id FROM tableinfo WHERE id=#{did})) UNION SELECT NAME FROM tableinfo WHERE id IN (SELECT tid2 FROM datarelation WHERE tid1=(SELECT id FROM tableinfo WHERE id=#{did}) OR tid2=(SELECT id FROM tableinfo WHERE id=#{did}));
   </select>
-  <select id="getDataRelation" resultType="cn.bdqn.datacockpit.entity.Datarelation">
-  	 SELECT * FROM datarelation
+  <select id="getDataRelation" parameterType="int" resultType="cn.bdqn.datacockpit.entity.Datarelation">
+  	 SELECT * FROM datarelation WHERE cid=#{cid}
   </select>
   
   <select id="getTable1" parameterType="int" resultType="string">
-  	SELECT NAME FROM tableinfos WHERE id=(SELECT tid1 FROM datarelation WHERE id=#{reid});
+  	SELECT NAME FROM tableinfo WHERE id=(SELECT tid1 FROM datarelation WHERE id=#{reid});
   </select>
    <select id="getTable2" parameterType="int" resultType="string">
-  	SELECT NAME FROM tableinfos WHERE id=(SELECT tid2 FROM datarelation WHERE id=#{reid});
+  	SELECT NAME FROM tableinfo WHERE id=(SELECT tid2 FROM datarelation WHERE id=#{reid});
   </select>
   
    <select id="getOneDataRelation" parameterType="int" resultType="cn.bdqn.datacockpit.entity.Datarelation">
@@ -181,5 +181,9 @@
 	</select>
 	<select id="selectname" parameterType="hashmap" resultType="cn.bdqn.datacockpit.entity.Datarelation">
 		SELECT * FROM datarelation WHERE NAME=#{name} AND cid=#{cid}
+	</select>
+	
+	<select id="selectOneById" resultType="int">
+		SELECT id FROM datarelation ORDER BY id  LIMIT 0,1
 	</select>
 </mapper>

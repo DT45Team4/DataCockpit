@@ -19,7 +19,6 @@
 	    	  {"data":"taskstatus"},
 	    	  {"data": function(data, type, row) { return '<button onclick="pop()" type="button" class="btn btn-primary btn-lg results" data-toggle="modal" data-target="#myModal2" data-whatever="@jason" style="width: 70px;height: 20px;font-size: 10px;line-height: 0px">查看结果</button>'; } },
 	      ],
-	      
 	});
 		t.on('order.dt search.dt',
 		 function() {
@@ -28,7 +27,6 @@
    		              order: 'applied',
    		        }).nodes().each(function(cell, i) {
    		              cell.innerHTML = i + 1;
-   		  	  
    		  	   	})        	 	
    		  	   }).draw();	
 	

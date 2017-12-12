@@ -333,7 +333,7 @@
         		var id=$("input[name='stid']").val();
         		var flag=false;//判断是否已经存在
         		
-        		alert("tab1:"+tab1+"tab2:"+tab2);
+        		//alert("tab1:"+tab1+"tab2:"+tab2);
         			if(nname.length==0){      	
         			$("#sp1").text("* 关联关系名称不可以为空");			
         				return false;
@@ -367,8 +367,8 @@
         		        	data:{"tab1":tab1,"tab2":tab2,"col1":col1,"col2":col2,"name":nname},
         		        	type:"POST",
         		        	success:function(message){
-        		        		alert(message);
-        		        		if(message==1){ 
+        		        		//alert(message);
+        		        		if(message==0){ 
         		        			$("#sp3").text("此关系已经存在");
         		        		}else{
         		        			window.location.href="./admin_shuju1.shtml?id=${No1}"
@@ -439,7 +439,7 @@
             		var state=$(this).val();
             		var id=$("input[name='stid']").val();
             		var sid=$(this).parent().parent().children().children("input[name='stid']").val();
-            		alert(sid);
+            		//alert(sid);
             	//	alert($("this").parent().parent().parent().children(2).val());
             		$.ajax({
             			url:"./admin_ajax3.shtml",
@@ -462,7 +462,7 @@
 		var did=$("select[name='did']").val();
 		var arithmeticid=$("select[name='arithmeticid']").val();
 		var rule=$("#rule").val();
-		alert("did:"+did+"arithmeticid"+arithmeticid+"rule"+rule);
+		//alert("did:"+did+"arithmeticid"+arithmeticid+"rule"+rule);
 		//window.location.href="./admininsert2.shtml?did="+did+"?arithmeticid="+arithmeticid+"?rule="+rule;
 		window.location.href="./admin_shuju6.shtml?did="+did+"&arithmeticid="+arithmeticid+"&rule="+rule
 	}

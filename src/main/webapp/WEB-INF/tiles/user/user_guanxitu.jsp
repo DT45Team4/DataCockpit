@@ -47,7 +47,7 @@
 			<li><input type="button" class="choose" value="中介数据表" style="background:#39cccc"></li>
 			<li><input type="button" class="choose" value="媒体渠道数据表" style="background:#3c8dbc"></li> -->
 			
-			<c:forEach items="${listss }" var="ss">
+			<c:forEach items="${listss}" var="ss">
 				<li><input type="button" class="choose" value="${ss}" style="background:#f39c12"></li>
 			</c:forEach>
 		</ul>      

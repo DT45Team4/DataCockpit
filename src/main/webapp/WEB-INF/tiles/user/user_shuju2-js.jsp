@@ -13,13 +13,7 @@
 		      keyboard:false
 
 		    }); 
- }    
- function pop2(){
-     
-	   
-}    
-
-    
+ }      
 </script>
 <script type="text/javascript">
 $(".close").click(function(){

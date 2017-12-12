@@ -691,7 +691,7 @@ public class AdminTilesController {
      	List<Datarelation> listll=ts.listreonlyone(map);
      	String flag;
      	if(listll.size()>0){   		
-     		flag="1";//已存在
+     		flag="0";//已存在
      	}else{
      		flag=id;//关系不存在
      		map.put("col1", col1);
@@ -725,8 +725,7 @@ public class AdminTilesController {
 	 String rule=req.getParameter("rule");  
 	 System.out.println("dids:"+dids+"  arithmeticids:"+arithmeticids+"     rule:"+rule);
 	  	Integer did=Integer.parseInt(dids);
-	  	Integer arithmeticid= Integer.parseInt(arithmeticids);
-	  	
+	  	Integer arithmeticid= Integer.parseInt(arithmeticids);	  	
     	System.out.println("=================================");
     	Analysistasks an=new Analysistasks();
     	an.setDid(did);
@@ -735,7 +734,7 @@ public class AdminTilesController {
     	HttpSession session=req.getSession();
      	String id=(String)session.getAttribute("No1");
      	int cid=Integer.parseInt(id);
-    	an.setTaskstatus(0);
+    	an.setState(0);
     	an.setCid(cid);
     	int flag=as.insertanalysistasksbyid(an);
     	return "redirect:/admin_shuju1.shtml?id="+cid;

@@ -23,8 +23,16 @@ public class Analysistasks {
     
     private String name;
     
+    private int state;
+    public int getState() {
+		return state;
+	}
 
-    public String getName() {
+	public void setState(int state) {
+		this.state = state;
+	}
+
+	public String getName() {
 		return name;
 	}
 

@@ -46,13 +46,13 @@ List<Tableinfo> selecttableByName(HashMap<String, Object> map);
     List<Datarelation> selectstate(HashMap map);
     
     List<Datarelation> selectname(HashMap map);
-    List<String> getAllTableinfos();
+    List<String> getAllTableinfos(int cid);
     
     int getDatatableId(String dname);
     
     List<String> getDatatableName(int did);
     
-    List<Datarelation> getDataRelation();
+    List<Datarelation> getDataRelation(int cid);
     
     Datarelation getOneDataRelation(int reid);
     //获取统一维度的表
@@ -61,4 +61,6 @@ List<Tableinfo> selecttableByName(HashMap<String, Object> map);
     String getTable2(int reid);
     
     String getField1(HashMap<String, Object> map);
+    
+    int selectOneById();
 }

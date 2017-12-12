@@ -48,9 +48,9 @@ public class TableinfoServiceImpl implements TableinfoService {
     }
 
 	@Override
-	public List<String> getAllTableinfos() {
+	public List<String> getAllTableinfos(int cid) {
 		// TODO Auto-generated method stub
-		return tm.getAllTableinfos();
+		return tm.getAllTableinfos(cid);
 	}
 
 	@Override
@@ -66,9 +66,9 @@ public class TableinfoServiceImpl implements TableinfoService {
 	}
 
 	@Override
-	public  List<Datarelation> getDataRelation() {
+	public  List<Datarelation> getDataRelation(int cid) {
 		// TODO Auto-generated method stub
-		return tm.getDataRelation();
+		return tm.getDataRelation(cid);
 	}
 
 	@Override
@@ -147,5 +147,11 @@ public class TableinfoServiceImpl implements TableinfoService {
 	public List<Datarelation> selectname(HashMap map) {
 		// TODO Auto-generated method stub
 		return tm.selectname(map);
+	}
+
+	@Override
+	public int selectOneById() {
+		// TODO Auto-generated method stub
+		return tm.selectOneById();
 	}
 }

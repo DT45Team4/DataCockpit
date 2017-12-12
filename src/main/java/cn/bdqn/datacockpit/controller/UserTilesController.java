@@ -131,20 +131,21 @@ public class UserTilesController {
     @RequiresPermissions("user")
     public String shuju1(Model model,HttpServletRequest req) {
         model.addAttribute("checks", "shuju1");
-        List<Datarelation> relation=tableinfoService.getDataRelation();
+        HttpSession session = req.getSession();
+        List<Datarelation> relation=tableinfoService.getDataRelation(Integer.parseInt(session.getAttribute("No2").toString()));
         System.out.println(relation);
         model.addAttribute("relation", relation);
         
-        String reid="1";
+        int reid=tableinfoService.selectOneById();
         //初始化维度列
-        String table1=tableinfoService.getTable1(Integer.parseInt(reid));
-    	String table2=tableinfoService.getTable2(Integer.parseInt(reid));
+        String table1=tableinfoService.getTable1(reid);
+    	String table2=tableinfoService.getTable2(reid);
     	
     	 ChineseToPinYin ctp = new ChineseToPinYin();
 	     String table1pinyin = ctp.getPingYin(table1);
 	     String table2pinyin = ctp.getPingYin(table2);
 	     
-	     Datarelation dr=tableinfoService.getOneDataRelation(Integer.parseInt(reid));
+	     Datarelation dr=tableinfoService.getOneDataRelation(reid);
 	     
 	     HashMap<String, Object> map1=new HashMap<String, Object>();
 	     map1.put("table2", table1pinyin);
@@ -164,7 +165,7 @@ public class UserTilesController {
 	     model.addAttribute("slist", showlist);
 	     
 	     //处理分析表的数据
-	     HttpSession session=req.getSession();
+	     //HttpSession session=req.getSession();
 	     Companyinfo cy = (Companyinfo) session.getAttribute("infos");
 	     Integer id = cy.getId();
 	     List<Analysistasks> analist=analysistasksService.selectAllTasks(id);
@@ -305,10 +306,13 @@ public class UserTilesController {
 
     @RequestMapping("/user_guanxitu")
     @RequiresPermissions("user")
-    public String userGuanxitu(Model model) {
-    	List<String> listss=tableinfoService.getAllTableinfos();
+    public String userGuanxitu(Model model,HttpServletRequest req) {
+    	HttpSession session=req.getSession();
+    	int cid=Integer.parseInt(session.getAttribute("No2").toString());
+    	List<String> listss=tableinfoService.getAllTableinfos(cid);
         model.addAttribute("checks", "shuju4");
         model.addAttribute("listss", listss);
+        System.out.println(listss.size());
         return "user_guanxitu.pages";
     }
 

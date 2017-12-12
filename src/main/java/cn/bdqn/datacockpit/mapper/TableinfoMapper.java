@@ -43,13 +43,13 @@ public interface TableinfoMapper {
     
     //查询关联关系的name是否重复
     List<Datarelation> selectname(HashMap map);
-    List<String> getAllTableinfos();
+    List<String> getAllTableinfos(int cid);
     
     int getDatatableId(String dname);
     
     List<String> getDatatableName(int did);
     
-    List<Datarelation> getDataRelation();
+    List<Datarelation> getDataRelation(int cid);
     
     String getTable1(int reid);
     
@@ -58,4 +58,6 @@ public interface TableinfoMapper {
     Datarelation getOneDataRelation(int reid);
     //获取所有字段
     String getField1(HashMap<String, Object> map);
+    
+    int selectOneById();
 }

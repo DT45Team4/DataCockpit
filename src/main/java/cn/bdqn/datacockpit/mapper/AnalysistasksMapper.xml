@@ -150,6 +150,6 @@
   	SELECT a.*,(SELECT NAME FROM datarelation b WHERE b.id=a.`did`) NAME FROM analysistasks a WHERE cid=#{cid};
   </select>
   <insert id="insertanalysistasksbyid" parameterType="cn.bdqn.datacockpit.entity.Analysistasks">
-  		INSERT INTO analysistasks(cid,did,taskstatus,rule,arithmeticid) VALUE(#{cid},#{did},#{taskstatus},#{rule},#{arithmeticid})
+  		INSERT INTO analysistasks(cid,did,taskstatus,rule,arithmeticid) VALUE(#{cid},#{did},#{state},#{rule},#{arithmeticid})
   </insert>
 </mapper>
