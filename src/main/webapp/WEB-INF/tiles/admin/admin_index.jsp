@@ -228,7 +228,7 @@
 											<td>${comp.email }</td>
 											<!-- <td><select><option>已启用</option>
 													<option>已禁用</option></select></td> -->
-											<td><a href="#">通过</a>&emsp;<a href="adminus_delete.shtml?id=${comp.id }">不通过</a></td>
+											<td><a href="aduser_update0.shtml?id=${comp.id }">通过</a>&emsp;<a href="adminus_delete.shtml?id=${comp.id }">不通过</a></td>
 										</tr>
 									</c:forEach>
 									</tbody>

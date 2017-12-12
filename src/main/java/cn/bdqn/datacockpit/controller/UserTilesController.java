@@ -1,6 +1,8 @@
 package cn.bdqn.datacockpit.controller;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,6 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -37,6 +42,7 @@ import cn.bdqn.datacockpit.service.InfoService;
 import cn.bdqn.datacockpit.service.TableinfoService;
 import cn.bdqn.datacockpit.service.XsTableService;
 import cn.bdqn.datacockpit.utils.ChineseToPinYin;
+import cn.bdqn.datacockpit.utils.DownloadExcel;
 import cn.bdqn.datacockpit.utils.ImportExecl;
 import cn.bdqn.datacockpit.utils.JdbcUtil;
 import net.sf.json.JSONArray;
@@ -57,6 +63,8 @@ public class UserTilesController {
     
     @Autowired
     private AnalysistasksService analysistasksService;
+    
+    public static final String FILE_SEPARATOR = System.getProperties().getProperty("file.separator");
     
     @RequestMapping("/user_pass")
     public String pass(Model model) {
@@ -170,6 +178,50 @@ public class UserTilesController {
         return "user_shuju2.pages";
     }
 
+    //下载
+    @RequestMapping("download")
+    @ResponseBody
+    @RequiresPermissions("user")
+    public void ExcelDown(@RequestParam String id,HttpServletRequest request,HttpServletResponse response) throws Exception{
+    	//System.out.println("进入ajax，值："+id);
+    	String docsPath = request.getSession().getServletContext()
+				.getRealPath("upload");
+		String fileName = id + System.currentTimeMillis() + ".xlsx";
+		String filePath = docsPath + FILE_SEPARATOR + fileName;
+		try {
+			OutputStream os = new FileOutputStream(filePath);
+			XSSFWorkbook wb = new XSSFWorkbook();
+			XSSFSheet sheet = wb.createSheet("test");
+			
+			//获得数据表数据
+			JdbcUtil jdbc1 = new JdbcUtil();
+	        ApplicationContext context = jdbc1.getContext();
+	        context = new ClassPathXmlApplicationContext("spring-common.xml");
+	        JdbcTemplate jt = (JdbcTemplate) context.getBean("jdbcTemplate");
+	        List<Map<String, Object>> lists = jdbc1.selectObj(jt, id);
+
+			for (int i = 0; i < lists.size(); i++) {
+				XSSFRow row = sheet.createRow(i);
+				Object obj=lists.get(i);
+				
+				String obj1=obj.toString();
+				String obj2=obj1.substring(1, obj1.length()-1);
+				String sobj[]=obj2.split(",");
+				for(int j=0;j<sobj.length-2;j++){
+					String ssobj[]=sobj[j].split("=");
+					row.createCell(j).setCellValue(ssobj[1]);
+				}
+			
+			}
+			wb.write(os);
+			os.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		DownloadExcel de=new DownloadExcel();
+		de.download(filePath, response);
+    }
+    
     @RequestMapping("/user_shuju3")
     @RequiresPermissions("user")
     public String shuju3(Model model, HttpServletRequest req) {

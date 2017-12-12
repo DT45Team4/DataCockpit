@@ -24,7 +24,7 @@
             </div>
             <div id="uploads" style="margin-left: 180px;margin-top: -35px"><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal2" data-whatever="@jason" style="width: 100px;height: 30px;font-size: 14px;line-height: 0px">上传新数据</button></div>
 
-            <div style="margin-left: 300px;margin-top: -29.7px"><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal2" data-whatever="@jason" style="width: 100px;height: 30px;font-size: 14px;line-height: 0px">导出数据</button></div>
+  			<div style="margin-left: 300px;margin-top: -29.7px"><a href="download.shtml?id=${name1}"><button id="downs" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal2" data-whatever="@jason" style="width: 100px;height: 30px;font-size: 14px;line-height: 0px">导出数据</button></a></div>
             <div class="box-body">
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
