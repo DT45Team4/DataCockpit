@@ -12,6 +12,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.http.protocol.HTTP;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -70,6 +71,7 @@ public class AdminTilesController {
     private AnalysistasksService as;
 
     @RequestMapping("/admin_index")
+    @RequiresPermissions("admin")
     public String index(Model model) {
         return "admin_index.page";
     }
@@ -154,6 +156,18 @@ public class AdminTilesController {
         is.deleteByPrimaryKey(id);
         return "admin_tongzhi1.page";
     }
+    
+    @RequestMapping("/aduser_insert8")   
+    public String aduser_update3(HttpServletRequest req) {
+        // 
+        Integer id = Integer.parseInt(req.getParameter("id"));
+        
+        Companyinfo comp = companyinfo.selectByPrimaryKey(id);
+        comp.setState(2);
+        companyinfo.updateByPrimaryKey(comp);
+        int aaa=us.insertByprimaryKey(id);
+        return "redirect:/selectAllCompanyinfo.shtml";
+    }
 
     @RequestMapping("/admin_delete")
     @RequiresPermissions("admin")
@@ -170,7 +184,7 @@ public class AdminTilesController {
         // 获取id
         Integer id = Integer.parseInt(req.getParameter("id"));
         companyinfo.deleteByPrimaryKey(id);
-        return "selectAllCompanyinfo.page";
+        return "redirect:/selectAllCompanyinfo.shtml";
     }
 
     @RequestMapping("/aduser_update")
@@ -354,6 +368,7 @@ public class AdminTilesController {
     public String selectAllCompanyinfo(Model model, HttpServletRequest req) {
         List<Companyinfo> lists = companyinfo.selectAllCompanies();
         model.addAttribute("lists", lists);
+        List<HashMap> list1=as.selectALLAnalysistasks();
         List<Info> infoList = is.selectAllInfo();
         if (infoList != null) {
             for (Info info : infoList) {
@@ -362,7 +377,7 @@ public class AdminTilesController {
             }
         }
         HttpSession session = req.getSession();
-        session.setAttribute("tongzhi", infoList);
+        session.setAttribute("list1", list1);
         // 转发
         return "admin_index.page";
     }
@@ -582,6 +597,7 @@ public class AdminTilesController {
     
     @ResponseBody
     @RequestMapping("/admin_ajax")
+    @RequiresPermissions("admin")
     public  Object ajax(@RequestParam(value="rtname1",required=true) int rtname1,Model model)throws Exception{
     	System.out.println("当前表id"+rtname1);
     	//Map<String, String> mmap=new HashMap<String, String>();
@@ -600,6 +616,7 @@ public class AdminTilesController {
     
     @ResponseBody
     @RequestMapping("/admin_ajax2")
+    @RequiresPermissions("admin")
     public  Object ajax2(@RequestParam(value="rtname1",required=true) int rtname1,Model model)throws Exception{
     	System.out.println("当前表id"+rtname1);
     	//Map<String, String> mmap=new HashMap<String, String>();
@@ -618,6 +635,7 @@ public class AdminTilesController {
     
     @ResponseBody
     @RequestMapping("/admin_ajax3")
+    @RequiresPermissions("admin")
     public  Object ajax3(@RequestParam(value="state",required=true) int state,@RequestParam(value="id",required=true) int id,Model model,HttpServletRequest req)throws Exception{
     	System.out.println("关联id:"+id+"状态"+state);  
     	HashMap map=new HashMap();
@@ -676,6 +694,7 @@ public class AdminTilesController {
     }
     */
     @RequestMapping("/aaaa222")
+    @RequiresPermissions("admin")
     public @ResponseBody String regajax22(@RequestParam("tab1") int tab1,@RequestParam("tab2") int tab2,@RequestParam("col1") int col1,@RequestParam("col2") String col2,@RequestParam("name") String name,HttpServletRequest req)throws Exception{   	
     	 int state=1;
      	System.out.println("关联tab1:"+tab1+":"+tab2+"状态"+state);    
@@ -703,6 +722,7 @@ public class AdminTilesController {
     }
     
     @RequestMapping("/admin_ajaxname")
+    @RequiresPermissions("admin")
     public @ResponseBody String getname(@RequestParam("name") String name,HttpServletRequest req) throws Exception{
     		String flag="1";
     	HttpSession session=req.getSession();
@@ -719,6 +739,7 @@ public class AdminTilesController {
     }
     
   @RequestMapping("admin_shuju6")
+  @RequiresPermissions("admin")
     public String insert(HttpServletRequest req){ 
 	 String dids= req.getParameter("did");
 	 String arithmeticids= req.getParameter("arithmeticid");
@@ -739,4 +760,14 @@ public class AdminTilesController {
     	int flag=as.insertanalysistasksbyid(an);
     	return "redirect:/admin_shuju1.shtml?id="+cid;
     }
+  
+  @RequestMapping("/select_did")
+	public String selectAllselectALLanalysistasksbydid1(Model model,HttpServletRequest req){
+	     	Integer id = Integer.parseInt(req.getParameter("id"));
+	     	List<HashMap> sele1=as.selectALLanalysistasksbydid(id);
+	     		model.addAttribute("sele1", sele1);
+	
+			return "admin_shuju3.page";
+}
+
 }

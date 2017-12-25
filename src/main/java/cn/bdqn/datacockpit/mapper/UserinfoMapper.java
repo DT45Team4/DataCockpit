@@ -16,12 +16,15 @@ public interface UserinfoMapper {
     //添加管理员账号
     int insertSelective(Userinfo record);
     int insertAdminRole(Userinfo record);
-    
+    //修改userinfo密码
+    int updatePassword(HashMap map);
     Userinfo selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(Userinfo record);
 
     int updateByPrimaryKey(Userinfo record);
+    
+    int insertByprimaryKey(int id);
     
     /**
      * shiro通过电话号查询用户

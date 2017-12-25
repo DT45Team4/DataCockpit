@@ -142,16 +142,14 @@
 			<div id=xt>
 				<ul>
 				
-					<li class=tz><a href="#">销售到访关联任务完成【2017-08-18】</a><img
+					<li class=tz><a href="#">销售到访关联任务完成【2017-12-11】</a><img
 						src="resource/images/6.png" /></li>
 						
-					<li class=tz><a href="#">到访与媒体渠道关联任务失败【2017-08-18】</a><img
-						src="resource/images/6.png" /></li>
-					<li class=tz><a href="#">到访认筹关联任务完成【2017-08-18】</a><img
-						src="resource/images/6.png" /></li>
+					<li class=tz><a href="#">到访与媒体渠道关联任务失败【2017-08-18】</a>
+						</li>
+					<li class=tz><a href="#">到访认筹关联任务完成【2017-08-18】</a></li>
 					<li class=tz><a href="#">到访与媒体渠道关联任务完成【2017-08-17】</a></li>
-					<li class=tz><a href="#">到访认筹关联任务失败【2017-08-17】</a><img
-						src="resource/images/6.png" /></li>
+					<li class=tz><a href="#">到访认筹关联任务失败【2017-08-17】</a></li>
 
 				</ul>
 			</div>

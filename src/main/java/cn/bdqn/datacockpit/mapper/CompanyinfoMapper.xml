@@ -16,7 +16,9 @@
   <sql id="Base_Column_List" >
     id, corpname, phone, name, job, password, email, state, approval
   </sql>
-  
+  <update id="updatepassword">
+  	UPDATE companyinfo SET PASSWORD=#{password} WHERE phone=#{phone};
+  </update>
    <select id="selectAllCompanies" resultMap="BaseResultMap">
     select 
     id, corpname, phone, name, job, email, state, approval

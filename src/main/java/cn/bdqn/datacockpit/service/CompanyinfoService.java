@@ -1,5 +1,6 @@
 package cn.bdqn.datacockpit.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import cn.bdqn.datacockpit.entity.Companyinfo;
@@ -76,5 +77,7 @@ public interface CompanyinfoService {
      * @return
      */
     int selectPhoneNum(String phone);
-
+    //修改companyinfo密码
+    int updatepassword(HashMap map);
+    
 }

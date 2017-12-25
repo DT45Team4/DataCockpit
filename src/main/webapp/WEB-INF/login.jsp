@@ -50,47 +50,19 @@
       }
     </style>
 </head>
-<body class="hold-transition login-page" >
+<body class="hold-transition login-page" onload="exit();">
 <!-- <video src="./images/dahai.mp4" controls="controls"></video> -->
-<video autoplay loop poster="dahai.jpg" id="bgvid"> 
-    <source src="<%=basePath %>/resource/images/dahai.mp4" type="video/mp4">
-</video>
-<div class="login-box">
-  <div class="login-logo">
-    <a href="#"><b>用户登录</b></a>
-  </div>
-  <!-- /.login-logo -->
-  <div class="login-box-body" style="background-color: rgba(54,167,129,.4);">
-    <p class="login-box-msg">请输入您的账号密码</p>
-
-    <form action="<%=basePath %>/login.shtml" method="post">
-      <div class="form-group has-feedback">
-        <input type="text" class="form-control" placeholder="请输入手机号码" pattern="1[34578]\d{9}" required="required" name="phone">
-        <span style="display: block;margin-top: -30px;margin-left: 291px"><img src="<%=basePath %>/resource/images/iphone.png" style="width: 27px;height: 25px"></span>
-      </div>
-      <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="请输入密码" pattern="[0-9a-zA-Z]{8,16}" required="required" name="password">
-        <span style="display: block;margin-top: -30px;margin-left: 293px"><img src="<%=basePath %>/resource/images/locked.png" style="width: 20px;height: 25px"></span>
-      </div>
-
-      <div class="form-group has-feedback">
-          <div>
-             <input type="text" class="form-control" id="randomcode" name="code2" placeholder="请输入验证码" style="width: 140px;float: left">
-          </div>
-          <div id="v_container" style="width: 150px;height: 40px;float: left;margin-left: 20px"></div>
-  
-      </div>
-		 <div class="col-xs-8">
-          <div class="checkbox icheck" style="margin-left:10px">
-            <label>
-              <input type="checkbox" name="onLine" value="3"> <span style="color:#272822">下次自动登录</span>
-            </label>
-          </div>
+	<video autoplay loop poster="dahai.jpg" id="bgvid"> 
+    	<source src="<%=basePath %>/resource/images/dahai.mp4" type="video/mp4">
+	</video>
+     <center>
+        <div class="alert alert-success alert-dismissible" style="width: 300px;height: 100px;margin-top:200px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4>提示</h4>
+                   <p>您的权限不够！</p>
+                   <p><span id="exittime"></span>秒钟之后将为您跳转到登录页面</p>                   
         </div>
-       <div class="col-xs-4" style="width: 320px;margin-top: 1px">
-          <button type="submit" class="btn btn-primary btn-block btn-flat">登录</button>
-        </div>
-      <div class="row">
+     </center>
        
         <!-- /.col -->
         <div class="col-xs-4" style="font-size: 14px;margin-top: 7px;margin-left:10px">
@@ -125,18 +97,16 @@
 <!-- iCheck -->
 <script src="<%=basePath %>/resource/js/icheck.min.js"></script>
 <script src="<%=basePath %>/resource/js/gVerify.js"></script>
-
-<!-- 获取验证码 -->
-<!-- <script>
-
-    var verifyCode = new GVerify("v_container");
-
-    document.getElementById("code_input").onblur = function(){
-      var res = document.getElementById("code_input").value;
-      if(!res){
-        alert("验证码错误");
-      }
-    }
-  </script> -->
+<script type="text/javascript">  
+    	var time = 3; 
+    	function exit() {  
+       	 	window.setTimeout('exit()', 1000); 
+       	 	time = time - 1;  
+       	 	document.getElementById("exittime").innerHTML = time;
+       	 	if(time==0){
+       	 		window.location.href="login.jsp";
+       	 	}
+   	 	}  
+	</script>
 </body>
 </html>

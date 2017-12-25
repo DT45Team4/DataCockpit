@@ -33,15 +33,25 @@
 	<!-- iCheck -->
 	<script src="<%=basePath %>/resource/js/icheck.min.js"></script>
 	<script src="<%=basePath %>/resource/js/gVerify.js"></script>
+	<script type="text/javascript">  
+    	var time = 3; 
+    	function exit() {  
+       	 	window.setTimeout('exit()', 1000); 
+       	 	time = time - 1;  
+       	 	document.getElementById("exittime").innerHTML = time;       	 
+   	 	}  
+	</script>
 </head>
-<body class="hold-transition register-page">
+<body class="hold-transition register-page" onload="exit()">
+	<video autoplay loop poster="dahai.jpg" id="bgvid"> 
+    	<source src="<%=basePath %>/resource/images/dahai.mp4" type="video/mp4">
+	</video>
     <center>
         <div class="alert alert-success alert-dismissible" style="width: 300px;height: 100px;margin-top:200px">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 <h4>提示</h4>
                    <p>您已经成功退出登录</p>
-                   <p>3秒钟之后将为您跳转到登录页面</p>
-                    
+                   <p><span id="exittime"></span>秒钟之后将为您跳转到登录页面</p>                   
         </div>
      </center>
   </body>

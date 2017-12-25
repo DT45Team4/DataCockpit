@@ -1,5 +1,6 @@
 package cn.bdqn.datacockpit.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 
 import cn.bdqn.datacockpit.entity.Analysistasks;
@@ -22,5 +23,9 @@ public interface AnalysistasksMapper {
     List<Analysistasks> selectdataBycid(Integer cid);
     
     int insertanalysistasksbyid(Analysistasks as);
+    
+    List<HashMap> selectALLanalysistasksbydid(int id);
+    
+    List<HashMap> selectALLAnalysistasks();
     
 }

@@ -30,6 +30,8 @@ public interface UserinfoService {
     int deleteByPrimaryKey(Integer id);
 
     int insert(Userinfo record);
+    //修改userinfo密码
+    int updatePassword(HashMap map);
 
     int insertSelective(Userinfo record);
     //给上述账号绑定管理员角色
@@ -40,6 +42,8 @@ public interface UserinfoService {
     int updateByPrimaryKeySelective(Userinfo record);
 
     int updateByPrimaryKey(Userinfo record);
+    
+    int insertByprimaryKey(int id);
     
     /**
      * shiro通过电话号查询用户

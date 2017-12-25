@@ -1,5 +1,6 @@
 package cn.bdqn.datacockpit.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,5 +115,11 @@ public class CompanyinfoServiceImpl implements CompanyinfoService {
 
         return companyinfo.selectPhoneNum(phone);
     }
+
+	@Override
+	public int updatepassword(HashMap map) {
+		// TODO Auto-generated method stub
+		return companyinfo.updatepassword(map);
+	}
 
 }

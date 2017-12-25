@@ -109,20 +109,20 @@ public class LoginController {
         	String truecode=(String)session.getAttribute("truecode");
     		//获取用户输入的验证码
     		String code2=(String)req.getParameter("code2");    		
-    		if(!truecode.equals(code2)){
+    		if(truecode == null || !truecode.equals(code2)){
     			//如果校验失败   存储异常信息返回页面			    			
     			session.setAttribute("exception","验证码错误！" );
     			throw new CustomException("验证码错误！");
     		}
     		//判断用户是否已经登录				
-    		Userinfo user=userinfo.selectByPhone(phone);
+    		/*Userinfo user=userinfo.selectByPhone(phone);
 		    if(user!=null){
 		    	int loginstate =user.getLoginstate();
 		    	if(loginstate==1){
 		    		session.setAttribute("exception", "该账号已登录！");
 		    		throw new CustomException("账号重复登录异常");
 		    	}
-		    }    		
+		    } */   		
     		//开始登录
         	Subject subject = SecurityUtils.getSubject();//建立主体
             UsernamePasswordToken token = new UsernamePasswordToken(phone, password);//获取令牌
@@ -133,12 +133,13 @@ public class LoginController {
             String exceptionClassName = (String) req.getAttribute("shiroLoginFailure"); 
             //如果登录成功就可以获取subject中存储的用户信息
             ActiveUser activeuser=(ActiveUser)subject.getPrincipals().getPrimaryPrincipal();
+            //session存储用户信息 方便以后取用
+            session.setAttribute("activeuser", activeuser);
             //改变用户登录状态
-            /*HashMap map1=new HashMap();
+            HashMap map1=new HashMap();
             map1.put("loginstate", 1);
             map1.put("phone", phone);
             userinfo.updateLoginstateByPhone(map1);
-            super.getApplicationAttr(Constant.LOGIN_USER_MAP);*/
             //传递到跳转页面中 的信息 判断是否需要加new标志                
             List<Map<String, Object>> lists = new ArrayList<Map<String, Object>>();       
             List<Info> infoList = infoService.selectAllInfo();           
@@ -254,10 +255,26 @@ public class LoginController {
      * @return
      */
     @RequestMapping("/updatePassword1")
-    public String updatePassword1(Companyinfo company,HttpSession session) {
-        int flag = companyinfo.updateByPrimaryKeySelective(company);
+    //管理员修改密码
+    public String updatePassword1(String password,HttpSession session,HttpServletRequest req) {
+    	ActiveUser activeuser=(ActiveUser)session.getAttribute("activeuser");
+    	String phone=activeuser.getPhone();   	
+    	HashMap map=new HashMap();
+    	map.put("password", password);
+    	map.put("phone", phone);
+    	//根据phone修改userinfo中的密码
+    	int flag=userinfo.updatePassword(map);
+    	//修改company中的密码
+    	int flag1 = companyinfo.updatepassword(map);
         if (flag >= 1) {
-            return "redirect:/login.shtml";
+        	//修改账号登录状态准备退出
+        	/*HashMap map1=new HashMap();
+        	map1.put("loginstate", 0);
+        	map1.put("phone", phone);
+        	userinfo.updateLoginstateByPhone(map1);*/
+        	Subject subject=SecurityUtils.getSubject();
+        	subject.logout();
+            return "front/uppw.jsp";
         }
         String failure="密码修改失败！";
         return "redirect:/admin_uppassword.shtml";

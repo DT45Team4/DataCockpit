@@ -10,6 +10,7 @@
 package cn.bdqn.datacockpit.service.impl;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,6 +89,20 @@ public class AnalysistasksServiceImpl implements AnalysistasksService {
 	public int insertanalysistasksbyid(Analysistasks as) {
 		// TODO Auto-generated method stub
 		return analysis.insertanalysistasksbyid(as);
+	}
+
+
+
+	@Override
+	public List<HashMap> selectALLAnalysistasks() {
+		// TODO Auto-generated method stub
+		return analysis.selectALLAnalysistasks();
+	}
+
+	@Override
+	public List<HashMap> selectALLanalysistasksbydid(int id) {
+		// TODO Auto-generated method stub
+		return analysis.selectALLanalysistasksbydid(id);
 	}
 
     

@@ -67,12 +67,14 @@ public class UserTilesController {
     public static final String FILE_SEPARATOR = System.getProperties().getProperty("file.separator");
     
     @RequestMapping("/user_pass")
+    @RequiresPermissions("user")
     public String pass(Model model) {
         model.addAttribute("checks", "geren2");
         return "user_pass.pages";
     }
 
     @RequestMapping("/user_update")
+    @RequiresPermissions("user")
     public String update(Model model) {
         model.addAttribute("checks", "geren1");
         return "user_update.pages";
@@ -182,7 +184,6 @@ public class UserTilesController {
     //下载
     @RequestMapping("download")
     @ResponseBody
-    @RequiresPermissions("user")
     public void ExcelDown(@RequestParam String id,HttpServletRequest request,HttpServletResponse response) throws Exception{
     	//System.out.println("进入ajax，值："+id);
     	String docsPath = request.getSession().getServletContext()
@@ -427,6 +428,7 @@ public class UserTilesController {
     }
 
     @RequestMapping("/user_uploads")
+    @RequiresPermissions("user")
     public String uploads01(MultipartFile upload,HttpServletRequest request,HttpServletResponse response,Model model) throws Exception{
     	String myfile= upload.getOriginalFilename();//获取要上传的文件名
     	System.out.println("文件名:"+myfile);
@@ -491,6 +493,7 @@ public class UserTilesController {
     
     //改进的关系关联功能
     @RequestMapping("/datarelation")
+    @RequiresPermissions("user")
     @ResponseBody
     public List<String> Datarelation(@RequestParam String dname) throws Exception{
     	int did=tableinfoService.getDatatableId(dname);
@@ -500,6 +503,7 @@ public class UserTilesController {
     
     //改进分析进度，显示统一的维度列 @RequestParam String reid
     @RequestMapping("/getrelation")
+    @RequiresPermissions("user")
     @ResponseBody
     public List<String> getRelation( @RequestParam String reid) throws Exception{
     	String table1=tableinfoService.getTable1(Integer.parseInt(reid));

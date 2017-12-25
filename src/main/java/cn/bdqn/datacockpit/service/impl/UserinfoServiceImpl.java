@@ -100,4 +100,17 @@ public class UserinfoServiceImpl implements UserinfoService {
 		// TODO Auto-generated method stub
 		return userinfoMapper.updateLoginstateByPhone(map);
 	}
+	
+	@Override
+	public int insertByprimaryKey(int id) {
+		// TODO Auto-generated method stub
+		return userinfoMapper.insertByprimaryKey(id);
+		
+	}
+	
+		@Override
+	public int updatePassword(HashMap map) {
+		// TODO Auto-generated method stub		
+		return userinfoMapper.updatePassword(map);
+	}
 }

@@ -10,6 +10,9 @@
     <result column="email" property="email" jdbcType="VARCHAR" />
     <result column="state" property="state" jdbcType="INTEGER" />
   </resultMap>
+  <update id="updatePassword">
+  		UPDATE userinfo SET PASSWORD=#{password} WHERE phone=#{phone}
+  </update>
   <select id="selectByPhone" parameterType="string" resultType="cn.bdqn.datacockpit.entity.Userinfo">
 		SELECT * FROM userinfo WHERE phone=#{Param}
 	</select>
@@ -102,6 +105,10 @@
       </if>
     </trim>
   </insert>
+  <insert id="insertByprimaryKey" parameterType="int">
+  		INSERT INTO userinfo(id,NAME,job,PASSWORD,phone,email,state)
+SELECT id,NAME,job,PASSWORD,phone,email,state FROM companyinfo WHERE id=#{id,jdbcType=INTEGER}
+   </insert>
   <insert id="insertAdminRole" parameterType="cn.bdqn.datacockpit.entity.Userinfo">
   		INSERT INTO user_role(rid,uid) VALUES(2,(SELECT id FROM userinfo WHERE phone=#{phone})); 
   </insert>

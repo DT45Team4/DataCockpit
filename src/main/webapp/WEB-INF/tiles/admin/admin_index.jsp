@@ -126,18 +126,33 @@
 			<!-- /.box-header -->
 			<div class="box-body">
 				<div id=xt>
-					<ul>
-						<li class=tz><a href="#">销售到访关联任务完成【2017-08-18】</a><img
-							src="resource/images/6.png" /></li>
-						<li class=tz><a href="#">到访与媒体渠道关联任务失败【2017-08-18】</a><img
-							src="resource/images/6.png" /></li>
-						<li class=tz><a href="#">到访认筹关联任务完成【2017-08-18】</a><img
-							src="resource/images/6.png" /></li>
-						<li class=tz><a href="#">到访与媒体渠道关联任务完成【2017-08-17】</a></li>
-						<li class=tz><a href="#">到访认筹关联任务失败【2017-08-17】</a><img
+				<table id="example3">
+				<c:forEach items="${list1 }" var="lis1">
+					 <ul>
+						<li class=tz><a href="select_did.shtml?id=${lis1.id }">${lis1.name }${lis1.endtime }
+					<c:choose>
+							<c:when test="${lis1.taskstatus==2 }">
+								已完成
+							</c:when>
+							<c:when test="${lis1.taskstatus==1 }">
+								执行中
+							</c:when>
+							<c:when test="${lis1.taskstatus==0 }">
+								开始执行
+							</c:when>
+							<c:when test="${lis1.taskstatus==-1 }">
+								执行失败
+							</c:when>
+					</c:choose>
+					
+					</a><img
 							src="resource/images/6.png" /></li>
 
-					</ul>
+					</ul> 
+					</c:forEach>
+					<tbody style="text-align: center;">
+					</tbody>
+					</table >
 				</div>
 			</div>
 			<div class="box-footer clearfix">
@@ -219,6 +234,7 @@
 									<tbody>
 
 									<c:forEach items="${lists }" var="comp" varStatus="status">
+									<c:if test="${comp.state==1 }">
 										<tr role="row" class="odd" style="text-align: center;">
 											<td class="sorting_1">${requestScope.offset+status.index+1}</td>
 											<td>${comp.phone }</td>
@@ -228,8 +244,9 @@
 											<td>${comp.email }</td>
 											<!-- <td><select><option>已启用</option>
 													<option>已禁用</option></select></td> -->
-											<td><a href="aduser_update0.shtml?id=${comp.id }">通过</a>&emsp;<a href="adminus_delete.shtml?id=${comp.id }">不通过</a></td>
+											<td><a href="aduser_insert8.shtml?id=${comp.id }">通过</a>&emsp;<a href="adminus_delete.shtml?id=${comp.id }">不通过</a></td>
 										</tr>
+										</c:if>
 									</c:forEach>
 									</tbody>
 

@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc 
+	    http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context.xsd">
 	
 	<!-- 自动扫描包 -->
 	<context:component-scan base-package="cn.bdqn.datacockpit.tiles,cn.bdqn.datacockpit.controller" />
@@ -15,7 +19,28 @@
             <bean class="cn.bdqn.datacockpit.datatable.SeacherConditionArgumentResolver"/>
         </mvc:argument-resolvers> -->
 	</mvc:annotation-driven>
-
+	<!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->  		
+	
+<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>  				
+	
+<!-- 开启Shiro注解 -->		
+	
+<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor"/>  	  		
+	
+	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">  	  	  
+		
+	<property name="securityManager" ref="securityManager"/>  	    	
+	</bean> 	
+<!-- shiro没权限异常捕捉后 跳转到unauthorizedUrl -->	
+<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">		
+<property name="exceptionMappings">			
+<props>				
+	<prop key="org.apache.shiro.authz.UnauthorizedException">/login.jsp</prop>			
+</props>		
+</property>
+	
+</bean>
+	
 	<!-- 引入tiles配置文件 -->
 	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer" >
 		<property name="definitions">

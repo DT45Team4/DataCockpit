@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-   <!-- Content Header (Page header) -->
-    <section class="content-header">
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<section class="content-header">
       <h1>
          这里是选择的用户对应公司名称
       </h1>
@@ -27,7 +27,33 @@
                 </tr>
                 </thead>
                 <tbody style="text-align: center;">
-                <tr>
+               <c:forEach items="${sele1 }" var="sele1">
+                	<tr>
+                	<td>${requestScope.offset+status.index+1}</td>
+                  <td>${sele1.starttime }</td>
+                  <td>${sele1.endtime }</td>
+                  <c:choose>
+							<c:when test="${sele1.taskstatus==2 }">
+								<td>已完成</td>
+						<td><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal2" data-whatever="@jason" style="width: 110px;height: 20px;font-size: 13px;line-height: 0px">查看结果</button></td>
+							</c:when>
+							<c:when test="${sele1.taskstatus==1 }">
+								<td>执行中</td>
+							</c:when>
+							<c:when test="${sele1.taskstatus==0 }">
+								<td>开始执行</td>
+							</c:when>
+							<c:when test="${sele1.taskstatus==-1 }">
+								<td>执行失败</td>
+							<td><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal1" style="width: 110px;height: 20px;font-size: 13px;line-height: 0px">查看出错信息</button></td>
+							</c:when>
+					</c:choose>
+      
+                	
+               	</tr>
+               	</c:forEach>
+                <!-- <tr>
+                
                   <td>1</td>
                   <td>2017-06-01 12:12:22</td>
                   <td>2017-06-01 15:12:22</td>
@@ -54,7 +80,7 @@
                   <td></td>
                   <td>任务已添加</td>
                   <td><a href="#"></a></td>
-                </tr>
+                </tr> -->
                 </tbody>
               </table>
 <div class="modal fade bs-example-modal-sm" id="myModal1" role="dialog" aria-label="myModalLabel" aria-hidden="true">  

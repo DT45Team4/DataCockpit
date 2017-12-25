@@ -71,33 +71,23 @@
 		    <!-- 身份认证失败，则跳转到登录页面的配置 -->  
 		   <property name="loginUrl" value="/login.jsp"/> 
 		    <!-- 权限认证失败，则跳转到指定页面 -->  
-		    <property name="unauthorizedUrl" value="/login.jsp"/>  
+		    <property name="unauthorizedUrl" value="login.jsp"/>  
 		    <!-- Shiro连接约束配置,即过滤链的定义 -->  
 		    <property name="filterChainDefinitions">  
 		        <value>  
-		          /login.jsp=anon
-		            /pages/register.jsp=anon
-		            /pages/wangjimima.jsp=anon
-		            /pages/yonghuxieyi.jsp=anon
+		            /login.jsp=anon
+		            /pages/**=anon
+		            /bower_components/**=anon
+		            /build/**=anon
+		            /dist/**=anon
+		            /plugins/**=anon
+		            /resource/**=anon
 		            /login.shtml=anon
 		            /login2.shtml=anon
 		            /getYzm.shtml=anon
 		            /*.shtml=authc
-		            /*.jsp=authc
-
-		            
+		            /*.jsp=authc		            
 		        </value>  
 		    </property>
-		</bean>  
-		
-		<!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->  
-		<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>  
-		
-		<!-- 开启Shiro注解 -->
-		<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor"/>  
-	  		<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">  
-	  	  <property name="securityManager" ref="securityManager"/>  
-	    </bean> 
-	    
-	
+		</bean>  				
 </beans>

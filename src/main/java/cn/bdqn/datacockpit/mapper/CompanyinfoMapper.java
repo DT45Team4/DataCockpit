@@ -1,5 +1,6 @@
 package cn.bdqn.datacockpit.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 
 import cn.bdqn.datacockpit.entity.Companyinfo;
@@ -23,4 +24,6 @@ public interface CompanyinfoMapper {
     int updateByPrimaryKey(Companyinfo record);
 
     int selectPhoneNum(String phone);
+    //ĞŞ¸ÄcompanyinfoÃÜÂë
+    int updatepassword(HashMap map);
 }
